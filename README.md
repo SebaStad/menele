@@ -10,12 +10,11 @@ This template should help get you started developing with Tauri and Yew.
 ## Stuff from install:
 
 ### Apt gets
+```
 sudo apt-get update
-
 sudo apt-get upgrade
-
-sudo apt-get install libssl-dev pkg-config build-essential libwebkit2gtk-4.1-dev   build-essential   curl   wget   file   libxdo-dev   libssl-dev   libayatana-appindicator3-dev   librsvg2-dev clang nsis
-
+sudo apt-get install libssl-dev pkg-config build-essential libwebkit2gtk-4.1-dev   build-essential   curl   wget   file   libxdo-dev   libssl-dev   libayatana-appindicator3-dev   librsvg2-dev clang nsis llvm
+```
 ### After template:
 Template created!
 
@@ -33,26 +32,32 @@ Your system is missing dependencies (or they do not exist in $PATH):
 ```
 
 Make sure you have installed the prerequisites for your OS: https://tauri.app/start/prerequisites/, then run:
-
+```
   cd menele
-
   cargo tauri android init
-
+```
 
 For Desktop development, run:
-
+```
   cargo tauri dev
-
+```
 For Android development, run:
-
+```
   cargo tauri android dev
-
+```
 
 ### Build for windows:
 https://v1.tauri.app/v1/guides/building/cross-platform/
-
+```
 rustup target add x86_64-pc-windows-msvc
-
 cargo install --locked cargo-xwin
-
 cargo tauri build --runner cargo-xwin --target x86_64-pc-windows-msvc
+```
+
+### Quick css check?
+
+```
+trunk serve
+```
+
+Trunk is rust webasm stuff thingy
