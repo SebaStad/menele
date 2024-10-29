@@ -5,3 +5,43 @@ This template should help get you started developing with Tauri and Yew.
 ## Recommended IDE Setup
 
 [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer).
+
+
+## Stuff from install:
+
+### Apt gets
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install libssl-dev pkg-config build-essential libwebkit2gtk-4.1-dev   build-essential   curl   wget   file   libxdo-dev   libssl-dev   libayatana-appindicator3-dev   librsvg2-dev clang nsis
+
+### After template:
+Template created!
+
+Your system is missing dependencies (or they do not exist in $PATH):
+╭────────────────────┬───────────────────────────────────────────────────────────╮
+│ Tauri CLI          │ Run `cargo install tauri-cli --version '^2.0.0' --locked` │
+├────────────────────┼───────────────────────────────────────────────────────────┤
+│ Trunk              │ Run `cargo install trunk --locked`                        │
+├────────────────────┼───────────────────────────────────────────────────────────┤
+│ wasm32 target      │ Run `rustup target add wasm32-unknown-unknown`            │
+├────────────────────┼───────────────────────────────────────────────────────────┤
+│ webkit2gtk & rsvg2 │ Visit https://tauri.app/guides/prerequisites/#linux       │
+╰────────────────────┴───────────────────────────────────────────────────────────╯
+
+Make sure you have installed the prerequisites for your OS: https://tauri.app/start/prerequisites/, then run:
+  cd menele
+  cargo tauri android init
+
+For Desktop development, run:
+  cargo tauri dev
+
+For Android development, run:
+  cargo tauri android dev
+
+
+### Build for windows:
+https://v1.tauri.app/v1/guides/building/cross-platform/
+
+rustup target add x86_64-pc-windows-msvc
+cargo install --locked cargo-xwin
+cargo tauri build --runner cargo-xwin --target x86_64-pc-windows-msvc
