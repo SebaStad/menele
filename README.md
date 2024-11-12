@@ -61,3 +61,8 @@ trunk serve
 ```
 
 Trunk is rust webasm stuff thingy
+
+
+### yew vs yew-router
+
+Docs are lieing, dont use git version but 0.18 version in toml for yew-router
