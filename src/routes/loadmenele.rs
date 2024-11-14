@@ -2,6 +2,7 @@ use yew::prelude::*;
 use yew_router::prelude::*;
 
 use crate::app::testmod::MainPageRoute;
+use crate::styling::centered_container::CenteredContainer;
 
 #[function_component(LoadMenele)]
 pub fn loadmenele() -> Html {
@@ -10,8 +11,10 @@ pub fn loadmenele() -> Html {
     let onclick = Callback::from(move |_| navigator.push(&MainPageRoute::Home));
     html! {
         <div>
-            <h1>{ "Load old Newspaper" }</h1>
-            <button {onclick}>{ "Go Home" }</button>
+            <CenteredContainer>
+                <h1>{ "Load old Newspaper" }</h1>
+                <button {onclick}>{ "Go Home" }</button>
+            </CenteredContainer>
         </div>
     }
 }

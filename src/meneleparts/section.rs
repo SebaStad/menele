@@ -1,7 +1,7 @@
-use create::meneleparts::leftmenele::MeneleSectionLeft;
-use create::meneleparts::rightmenele::MeneleSectionRight;
+use crate::meneleparts::leftmenele::MeneleSectionLeft;
+use crate::meneleparts::rightmenele::MeneleSectionRight;
 
-enum MeneleSection {
+pub enum MeneleSection {
     left(MeneleSectionLeft),
     right(MeneleSectionRight)
 }

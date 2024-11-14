@@ -2,6 +2,7 @@ use yew::prelude::*;
 use yew_router::prelude::*;
 
 use crate::app::testmod::MainPageRoute;
+use crate::meneleparts::headerfooter::Header;
 
 #[function_component(NewMenele)]
 pub fn newmenele() -> Html {
@@ -13,6 +14,7 @@ pub fn newmenele() -> Html {
             <h1>{ "Create new Newspaper" }</h1>
             <button {onclick}>{ "Go Home" }</button>
             <br/>
+            <HeaderFooter/>
         </div>
     }
 }

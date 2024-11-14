@@ -60,9 +60,9 @@ pub fn app() -> Html {
 
     html! {
         <main class="container">
-            <div class="mainrow">
-                <div class="maincolumnleft">
-                    <h1>{"Welcome to Tauri + Yew"}</h1>
+            <div class={classes!("mainpage")}>
+                // <div class="maincolumnleft">
+                    <h1>{"Welcome to MeNeLe"}</h1>
 
                     <div class="row">
                         <a href="https://tauri.app" target="_blank">
@@ -78,10 +78,10 @@ pub fn app() -> Html {
                         <input id="greet-input" ref={greet_input_ref} placeholder="Enter a name..." />
                         <button type="submit">{"Greet"}</button>
                     </form>
-                </div>
-                <div class="maincolumnright">
-                    <p>{ &*greet_msg }</p>
-                </div>
+                // </div>
+                // <div class="maincolumnright">
+                //     <p>{ &*greet_msg }</p>
+                // </div>
             </div> 
         </main>
     }

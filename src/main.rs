@@ -8,6 +8,8 @@ use app::testmod::Main;
 
 mod routes;
 mod app;
+mod styling;
+mod meneleparts;
 
 // use crate::app::router::{AppRoute, switch}; 
 // use crate::routes::loadmenele::LoadNewsletter;

@@ -2,6 +2,7 @@ use yew::prelude::*;
 use yew_router::prelude::*;
 
 use crate::app::testmod::MainPageRoute;
+use crate::styling::centered_container::CenteredContainer;
 
 #[function_component(Home)]
 pub fn home() -> Html {
@@ -12,22 +13,28 @@ pub fn home() -> Html {
     // offical way of doing:
     // https://yew.rs/docs/0.20/concepts/router#function-components
     html! {
-        <div>
-            <h1>{ "Home" }</h1>
-            <button onclick={
-                let onclick = onclick.clone();
-                move |_| onclick.emit(&MainPageRoute::NewMenele)
-            }>{ "Go New" }</button>
-            <br/>
-            <button onclick={
-                let onclick = onclick.clone();
-                move |_| onclick.emit(&MainPageRoute::LoadMenele)
-            }>{ "Go Load" }</button>
-            <br/>
-            <button onclick={
-                let onclick = onclick.clone();
-                move |_| onclick.emit(&MainPageRoute::Settings)
-            }>{ "Go Settings" }</button>
-        </div>
+        <CenteredContainer>
+                <h1>{ "Home" }</h1>
+                <div style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                ">
+                    <button onclick={
+                        let onclick = onclick.clone();
+                        move |_| onclick.emit(&MainPageRoute::NewMenele)
+                    }>{ "Go New" }</button>
+                    <br/>
+                    <button onclick={
+                        let onclick = onclick.clone();
+                        move |_| onclick.emit(&MainPageRoute::LoadMenele)
+                    }>{ "Go Load" }</button>
+                    <br/>
+                    <button onclick={
+                        let onclick = onclick.clone();
+                        move |_| onclick.emit(&MainPageRoute::Settings)
+                    }>{ "Go Settings" }</button>
+                </div>
+        </CenteredContainer>
     }
 }

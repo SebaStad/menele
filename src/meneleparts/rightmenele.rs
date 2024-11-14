@@ -1,2 +1,2 @@
-struct MeneleSectionRight {
+pub struct MeneleSectionRight {
 }
