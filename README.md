@@ -66,3 +66,12 @@ Trunk is rust webasm stuff thingy
 ### yew vs yew-router
 
 Docs are lieing, dont use git version but 0.18 version in toml for yew-router
+
+## Settings Ideas
+
+* Light mode / Dark Mode
+* Farbenanpassung
+* PDF to image
+  * Implement image as code
+* Back to default Settings
+* Adjust variables in Props for formatting
