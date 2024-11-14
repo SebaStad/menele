@@ -1,5 +1,7 @@
 use yew::prelude::*;
 
+use crate::meneleparts::header::Header;
+use crate::meneleparts::introduction::IntroductionHeader;
 
 #[derive(PartialEq, Properties)]
 pub struct NewsLetterProps {}
@@ -9,7 +11,8 @@ pub fn NewsLetter(props: &NewsLetterProps) -> Html {
     let NewsLetterProps {} = props;
     html! {
         <div>
-            // <Header/>
+            <Header/>
+            <IntroductionHeader/>
             // <Einleitung/>
             // <Trenner/>
             // <Sectionlist/>

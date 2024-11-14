@@ -5,4 +5,6 @@ pub mod section;
 pub mod sectionlist;
 
 pub mod newsletter;
-pub mod headerfooter;
+pub mod header;
+
+pub mod introduction;
