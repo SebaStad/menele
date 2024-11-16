@@ -1,10 +1,13 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
+// use yew::{use_effect_with_deps};
+use gloo::events::EventListener;
+use gloo::utils::window;
 
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
 use yew::html::Scope;
-use web_sys::{MouseEvent, window};
+// use web_sys::{MouseEvent, window};
 use std::rc::Rc;
 use std::cell::Cell;
 
@@ -14,15 +17,10 @@ use crate::meneleparts::newsletter::NewsLetter;
 
 #[function_component(NewMenele)]
 pub fn newmenele() -> Html {
-    let navigator = use_navigator().unwrap();
 
-    let onclick = Callback::from(move |_| navigator.push(&MainPageRoute::Home));
     html! {
         <div>
-            <h1>{ "Create new Newspaper" }</h1>
-            <button {onclick}>{ "Go Home" }</button>
-            <br/>
-            <NewsLetter/>
+            <ResizableLayout/>
         </div>
     }
 }
@@ -76,8 +74,77 @@ pub fn newmenele() -> Html {
 //     }
 // }
 
+// https://yew.rs/docs/concepts/html/events#using-gloo-concise
+
+#[function_component(ResizableLayout)]
+pub fn resizable_layout() -> Html {
+    let left_width = use_state(|| 50.0); // Left container starts at 50% width
+    let is_dragging = use_state(|| false);
 
 
+    let is_dragging = is_dragging.clone();
+    use_effect_with(
+        (is_dragging.clone(), left_width.clone()),
+        {
+            let is_dragging = is_dragging.clone();
+            let left_width = left_width.clone();
+            move |_| {
+                let is_dragging_2 = is_dragging.clone();
+                let mouse_move_listener = EventListener::new(&window(), "mousemove", move |e| {
+                    if *is_dragging_2 {
+                        let mouse_event = e.dyn_ref::<web_sys::MouseEvent>().unwrap();
+                        let window_width = window().inner_width().unwrap().as_f64().unwrap();
+                        let new_width = (mouse_event.client_x() as f64 / window_width) * 100.0;
+                        left_width.set(new_width.clamp(10.0, 90.0)); // Clamp to prevent overlap
+                    }
+                });
+
+                let mouse_up_listener = EventListener::new(&window(), "mouseup", move |_| {
+                    is_dragging.set(false);
+                });
+
+                // Cleanup listeners on unmount
+                || {
+                    drop(mouse_move_listener);
+                    drop(mouse_up_listener);
+                }
+            }
+        }
+        // (), // No dependencies, only run once
+    );
+
+
+    let on_mouse_down = {
+        let is_dragging = is_dragging.clone();
+        Callback::from(move |_| {
+            is_dragging.set(true);
+        })
+    };
+
+    let navigator = use_navigator().unwrap();
+
+    let onclick = Callback::from(move |_| navigator.push(&MainPageRoute::Home));
+
+    html! {
+        <div style="display: flex; height: 100vh; width: 100%;">
+            <div style={format!("width: {}%;", *left_width)}>
+                <h1>{ "Create new Newspaper" }</h1>
+                <button {onclick}>{ "Go Home" }</button>
+            </div>
+            <div
+                style="
+                    width: 5px;
+                    background-color: #e0e0e0;
+                    cursor: ew-resize;
+                "
+                onmousedown={on_mouse_down}
+            />
+            <div style={format!("width: {}%;", 100.0 - *left_width)}>
+                <NewsLetter/>
+            </div>
+        </div>
+    }
+}
 
 
 
