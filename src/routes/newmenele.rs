@@ -3,6 +3,8 @@ use yew_router::prelude::*;
 // use yew::{use_effect_with_deps};
 use gloo::events::EventListener;
 use gloo::utils::window;
+use gloo_console::log;
+use wasm_bindgen::JsValue;
 
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
@@ -25,53 +27,51 @@ pub fn newmenele() -> Html {
     }
 }
 
-
-
-
-// #[function_component(TwoPanes)]
-// fn two_panes() -> Html {
-//     let left_width = Rc::new(Cell::new(50.0));  // percentage width of the left pane
-//     let left_width = Rc::clone(&left_width);
-//     Callback::from(move |event: MouseEvent| {
-//         let start_x = event.client_x();
-//         let initial_width = left_width.get();
-//         let left_width = Rc::clone(&left_width);
-
-//         // Create a closure for the "mousemove" event
-//         let onmousemove = Closure::wrap(Box::new(move |event: MouseEvent| {
-//             let delta_x = event.client_x() - start_x;
-//             let new_width = (initial_width + delta_x as f64 / window().unwrap().inner_width().unwrap().as_f64().unwrap() * 100.0)
-//                 .clamp(10.0, 90.0);  // Clamp the width between 10% and 90%
-//             left_width.set(new_width);
-//         }) as Box<dyn FnMut(_)>);
-
-//         // Attach the "mousemove" event listener
-//         window()
-//             .expect("window not available")
-//             .add_event_listener_with_callback("mousemove", onmousemove.as_ref().unchecked_ref())
-//             .unwrap();
-//         onmousemove.forget();
-
-//         // Create a closure for the "mouseup" event
-//         let onmouseup = Closure::wrap(Box::new(move |_: MouseEvent| {  // Explicitly set the type here
-//             // Remove the "mousemove" event listener
-//             window()
-//                 .expect("window not available")
-//                 .remove_event_listener_with_callback("mousemove", onmousemove.as_ref().unchecked_ref())
-//                 .unwrap();
-//         }) as Box<dyn FnMut(_)>);
-
-//         // Attach the "mouseup" event listener
-//         window()
-//             .expect("window not available")
-//             .add_event_listener_with_callback("mouseup", onmouseup.as_ref().unchecked_ref())
-//             .unwrap();
-//         onmouseup.forget();
+// #[hook]
+// pub fn use_is_small_screen(threshold: f64) -> bool {
+//     let is_small_screen = use_state(|| {
+//         let width = &window()
+//             .inner_width()
+//             .unwrap()
+//             .as_f64()
+//             .unwrap_or(1024.0);
+//         *width < threshold
 //     });
 
-//     html! {
+//     let is_small_screen = is_small_screen.clone();
+//     let window2 = window();
 
+//     {
+//         use_effect_with(
+//             (is_small_screen.clone(), window2.clone()),
+//             {
+//                 let is_small_screen = is_small_screen.clone();
+//                 let window2 = window2.clone();
+//                 move |_| {
+//                     let window = window.clone();
+//                     let is_small_screen = is_small_screen.clone();
+        
+//                     let on_resize = Closure::wrap(Box::new(move || {
+//                         let window2 = window2.clone();
+//                         if let Some(width) = &window2
+//                             .inner_width()
+//                             .ok()
+//                             .and_then(|val| val.as_f64())
+//                         {
+//                             is_small_screen.set(*width < threshold);
+//                         };
+//                     }) as Box<dyn FnMut()>);
+//                     let window2 = window();
+//                     window2
+//                         .add_event_listener_with_callback("resize", on_resize.as_ref().unchecked_ref())
+//                         .expect("should register resize event listener");
+//                     on_resize.forget();
+//                     || {}
+//                 }
+//         });
 //     }
+
+//     *is_small_screen
 // }
 
 // https://yew.rs/docs/concepts/html/events#using-gloo-concise
@@ -80,22 +80,33 @@ pub fn newmenele() -> Html {
 pub fn resizable_layout() -> Html {
     let left_width = use_state(|| 50.0); // Left container starts at 50% width
     let is_dragging = use_state(|| false);
+    let is_small_window = use_state(|| false);
+    let window_threshhold = 900.0;
 
-
-    let is_dragging = is_dragging.clone();
     use_effect_with(
-        (is_dragging.clone(), left_width.clone()),
+        (is_dragging.clone(), left_width.clone(), is_small_window.clone()),
         {
             let is_dragging = is_dragging.clone();
             let left_width = left_width.clone();
+            let is_small_window = is_small_window.clone();
             move |_| {
                 let is_dragging_2 = is_dragging.clone();
+                // let is_small_window = is_small_window.clone();
                 let mouse_move_listener = EventListener::new(&window(), "mousemove", move |e| {
                     if *is_dragging_2 {
                         let mouse_event = e.dyn_ref::<web_sys::MouseEvent>().unwrap();
                         let window_width = window().inner_width().unwrap().as_f64().unwrap();
-                        let new_width = (mouse_event.client_x() as f64 / window_width) * 100.0;
-                        left_width.set(new_width.clamp(10.0, 90.0)); // Clamp to prevent overlap
+                        let new_width = (mouse_event.client_x() as f64 / window_width.clone()) * 100.0;
+                        let mouse_position_x = mouse_event.client_x() as f64;
+                        let right_window_size = window_width - mouse_event.client_x() as f64;
+                        if right_window_size <= window_threshhold {
+                            log!("ASDF", right_window_size);
+                            is_small_window.set(true)
+                        }  else {
+                            log!("Hello", right_window_size);
+                            is_small_window.set(false)
+                        };
+                        left_width.set(new_width.clamp(20.0, 80.0)); // Clamp to prevent overlap
                     }
                 });
 
@@ -103,10 +114,21 @@ pub fn resizable_layout() -> Html {
                     is_dragging.set(false);
                 });
 
+                // let mouse_up_listener_2 = EventListener::new(&window(), "mouseup", move |_| {
+                //     let window_width = window().inner_width().unwrap().as_f64().unwrap();
+                //     log!("Hello", window_width);
+                //     if window_width <= window_threshhold {
+                //         is_small_window.set(true)
+                //     }  else {
+                //         is_small_window.set(false)
+                //     };
+                // });
+
                 // Cleanup listeners on unmount
                 || {
                     drop(mouse_move_listener);
                     drop(mouse_up_listener);
+                    // drop(mouse_up_listener_2);
                 }
             }
         }
@@ -122,7 +144,6 @@ pub fn resizable_layout() -> Html {
     };
 
     let navigator = use_navigator().unwrap();
-
     let onclick = Callback::from(move |_| navigator.push(&MainPageRoute::Home));
 
     html! {
@@ -139,8 +160,8 @@ pub fn resizable_layout() -> Html {
                 "
                 onmousedown={on_mouse_down}
             />
-            <div style={format!("width: {}%;", 100.0 - *left_width)}>
-                <NewsLetter/>
+            <div style={format!("width: {}%; is_small: {}", 100.0 - *left_width, *is_small_window)}>
+                <NewsLetter is_small_window={*is_small_window}/>
             </div>
         </div>
     }

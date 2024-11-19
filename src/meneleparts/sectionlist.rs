@@ -1,5 +1,4 @@
 use yew::prelude::*;
-use yew_router::prelude::*;
 
 use crate::meneleparts::section::MeneleSection;
 
@@ -10,28 +9,39 @@ enum Msg {
 }
 
 #[derive(PartialEq, Properties)]
-pub struct MeneleSectionsPropsProps {}
-
-#[function_component]
-pub fn MeneleSectionsProps(props: &MeneleSectionsPropsProps) -> Html {
-    let MeneleSectionsPropsProps {} = props;
-    html! {
-        <div></div>
-    }
+pub struct MeneleSectionsProps {
+    pub is_small_window: bool,
+    pub sections: Vec<MeneleSection>,
+    pub is_next_left: bool
 }
 
+// impl MeneleSectionsProps {
 
-struct MeneleSections {
-    menele_sections: Vec<MeneleSection>
-}
+//     pub fn new() -> Self {
+//         Self {
+//             sections: Vec::new(),
+//             is_next_left: true,
+//             is_small_window: false
+//         }
+//     }
+
+//     pub fn add_section(&mut self, new_section: MeneleSection) {
+//         self.sections.push(new_section)
+//     }
+// }
+
+struct MeneleSections ;
+
+// struct MeneleSections {
+//     menele_sections: Vec<MeneleSection>
+// }
 
 impl Component for MeneleSections {
     type Message = Msg;
-    type Properties = MeneleSectionsPropsProps;
+    type Properties = MeneleSectionsProps;
 
     fn create(ctx: &Context<Self>) -> Self {
         Self {
-            menele_sections: Vec::new(),
         }
     }
 

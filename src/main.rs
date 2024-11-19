@@ -5,11 +5,13 @@ use yew_router::prelude::*;
 // mod app;
 // use app::app::App;
 use app::testmod::Main;
+use test::test_add_section_chatgpt::AddSection;
 
 mod routes;
 mod app;
 mod styling;
 mod meneleparts;
+mod test;
 
 // use crate::app::router::{AppRoute, switch}; 
 // use crate::routes::loadmenele::LoadNewsletter;
