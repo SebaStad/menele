@@ -97,13 +97,13 @@ pub fn resizable_layout() -> Html {
                         let mouse_event = e.dyn_ref::<web_sys::MouseEvent>().unwrap();
                         let window_width = window().inner_width().unwrap().as_f64().unwrap();
                         let new_width = (mouse_event.client_x() as f64 / window_width.clone()) * 100.0;
-                        let mouse_position_x = mouse_event.client_x() as f64;
+                        // let mouse_position_x = mouse_event.client_x() as f64;
                         let right_window_size = window_width - mouse_event.client_x() as f64;
                         if right_window_size <= window_threshhold {
-                            log!("ASDF", right_window_size);
+                            // log!("ASDF", right_window_size);
                             is_small_window.set(true)
                         }  else {
-                            log!("Hello", right_window_size);
+                            // log!("Hello", right_window_size);
                             is_small_window.set(false)
                         };
                         left_width.set(new_width.clamp(20.0, 80.0)); // Clamp to prevent overlap
@@ -146,11 +146,37 @@ pub fn resizable_layout() -> Html {
     let navigator = use_navigator().unwrap();
     let onclick = Callback::from(move |_| navigator.push(&MainPageRoute::Home));
 
+    let sections = use_state(|| vec![]);
+
+    let add_section = {
+        let sections = sections.clone();
+        Callback::from(move |_| {
+            // Alternate between left and right sections
+            let mut new_sections = (*sections).clone();
+            let is_left = new_sections.len() % 2 == 0; // Alternate based on count
+            new_sections.push(SectionData {
+                content: format!("New Section {}", new_sections.len() + 1),
+                is_left,
+                image_url: String::from("https://www.medius-fitness.de/wp-content/uploads/2021/06/medius-Logo-550x120-DSV.png")
+            });
+            sections.set(new_sections);
+        })
+    };
+
+    // html! {
+    //     <div>
+    //         <button onclick={add_section}>{ "Add Section" }</button>
+    //         <Sections sections={(*sections).clone()} />
+    //     </div>
+    // }
+// }
+
     html! {
         <div style="display: flex; height: 100vh; width: 100%;">
             <div style={format!("width: {}%;", *left_width)}>
                 <h1>{ "Create new Newspaper" }</h1>
                 <button {onclick}>{ "Go Home" }</button>
+                <button onclick={add_section}>{ "Add Section" }</button>
             </div>
             <div
                 style="
@@ -161,7 +187,7 @@ pub fn resizable_layout() -> Html {
                 onmousedown={on_mouse_down}
             />
             <div style={format!("width: {}%; is_small: {}", 100.0 - *left_width, *is_small_window)}>
-                <NewsLetter is_small_window={*is_small_window}/>
+                <NewsLetter is_small_window={*is_small_window} dynamic_sections={(*sections).clone()}/>
             </div>
         </div>
     }
@@ -221,4 +247,55 @@ impl Component for MeneleSections {
         }
     }
 
+}
+
+use yew::{function_component, html, Html, Properties, use_state, Callback};
+// use yew::{function_component, html, use_state, Html};
+// use yew::{function_component, html, Callback, Html, Properties};
+
+#[derive(Properties, PartialEq)]
+pub struct SectionProps {
+    pub text: String,
+    pub image_url: String,
+    pub is_left: bool,
+}
+
+#[function_component(Section)]
+pub fn section(props: &SectionProps) -> Html {
+    let SectionProps {text, image_url, is_left} = props;
+    html! {
+        <div class={if *is_left { "section-left" } else { "section-right" }}>
+            { &text }
+            <img src={image_url.clone()}/>
+        </div>
+    }
+}
+
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct SectionData {
+    pub content: String,
+    pub image_url: String,
+    pub is_left: bool,
+}
+
+#[derive(Properties, PartialEq, Clone)]
+pub struct SectionsProps {
+    pub sections: Vec<SectionData>,
+}
+
+#[function_component(Sections)]
+pub fn sections(props: &SectionsProps) -> Html {
+    let SectionsProps {sections} = props;
+    html! {
+        <div class="sections-container">
+            {
+                for sections.iter().map(|section| {
+                    html! {
+                        <Section text={section.content.clone()} is_left={section.is_left} image_url = {section.image_url.clone()} />
+                    }
+                })
+            }
+        </div>
+    }
 }

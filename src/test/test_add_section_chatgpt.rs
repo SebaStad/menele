@@ -4,15 +4,18 @@ use yew::{function_component, html, Html, Properties, use_state, Callback};
 
 #[derive(Properties, PartialEq)]
 pub struct SectionProps {
-    pub content: String,
+    pub text: String,
+    pub image_url: String,
     pub is_left: bool,
 }
 
 #[function_component(Section)]
 pub fn section(props: &SectionProps) -> Html {
+    let SectionProps {text, image_url, is_left} = props;
     html! {
-        <div class={if props.is_left { "section-left" } else { "section-right" }}>
-            { &props.content }
+        <div class={if *is_left { "section-left" } else { "section-right" }}>
+            { &text }
+            <img src={image_url.clone()}/>
         </div>
     }
 }
@@ -21,6 +24,7 @@ pub fn section(props: &SectionProps) -> Html {
 #[derive(Clone, Debug, PartialEq)]
 pub struct SectionData {
     pub content: String,
+    pub image_url: String,
     pub is_left: bool,
 }
 
@@ -31,12 +35,13 @@ pub struct SectionsProps {
 
 #[function_component(Sections)]
 pub fn sections(props: &SectionsProps) -> Html {
+    let SectionsProps {sections} = props;
     html! {
         <div class="sections-container">
             {
-                for props.sections.iter().map(|section| {
+                for sections.iter().map(|section| {
                     html! {
-                        <Section content={section.content.clone()} is_left={section.is_left} />
+                        <Section text={section.content.clone()} is_left={section.is_left} image_url = {section.image_url.clone()} />
                     }
                 })
             }
@@ -60,6 +65,7 @@ pub fn add_section() -> Html {
             new_sections.push(SectionData {
                 content: format!("New Section {}", new_sections.len() + 1),
                 is_left,
+                image_url: String::from("https://www.medius-fitness.de/wp-content/uploads/2021/06/medius-Logo-550x120-DSV.png")
             });
             sections.set(new_sections);
         })
