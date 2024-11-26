@@ -75,3 +75,5 @@ Docs are lieing, dont use git version but 0.18 version in toml for yew-router
   * Implement image as code
 * Back to default Settings
 * Adjust variables in Props for formatting
+* Add Button at section to implement a Link
+  * Make sure its rendered correctly in preview
