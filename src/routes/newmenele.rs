@@ -17,6 +17,11 @@ use crate::app::testmod::MainPageRoute;
 use crate::meneleparts::header::Header;
 use crate::meneleparts::newsletter::NewsLetter;
 
+
+use crate::routes::subroutes::newmenele_right::{SectionProps, SectionData, Sections};
+use crate::routes::subroutes::newmenele_left::{InputSectionData, InputSection, InputSections};
+use crate::routes::subroutes::coupled_sections::{SectionState, SectionAction, SectionRaw, convert_sections};
+
 #[function_component(NewMenele)]
 pub fn newmenele() -> Html {
 
@@ -26,53 +31,6 @@ pub fn newmenele() -> Html {
         </div>
     }
 }
-
-// #[hook]
-// pub fn use_is_small_screen(threshold: f64) -> bool {
-//     let is_small_screen = use_state(|| {
-//         let width = &window()
-//             .inner_width()
-//             .unwrap()
-//             .as_f64()
-//             .unwrap_or(1024.0);
-//         *width < threshold
-//     });
-
-//     let is_small_screen = is_small_screen.clone();
-//     let window2 = window();
-
-//     {
-//         use_effect_with(
-//             (is_small_screen.clone(), window2.clone()),
-//             {
-//                 let is_small_screen = is_small_screen.clone();
-//                 let window2 = window2.clone();
-//                 move |_| {
-//                     let window = window.clone();
-//                     let is_small_screen = is_small_screen.clone();
-        
-//                     let on_resize = Closure::wrap(Box::new(move || {
-//                         let window2 = window2.clone();
-//                         if let Some(width) = &window2
-//                             .inner_width()
-//                             .ok()
-//                             .and_then(|val| val.as_f64())
-//                         {
-//                             is_small_screen.set(*width < threshold);
-//                         };
-//                     }) as Box<dyn FnMut()>);
-//                     let window2 = window();
-//                     window2
-//                         .add_event_listener_with_callback("resize", on_resize.as_ref().unchecked_ref())
-//                         .expect("should register resize event listener");
-//                     on_resize.forget();
-//                     || {}
-//                 }
-//         });
-//     }
-
-//     *is_small_screen
-// }
 
 // https://yew.rs/docs/concepts/html/events#using-gloo-concise
 
@@ -114,16 +72,6 @@ pub fn resizable_layout() -> Html {
                     is_dragging.set(false);
                 });
 
-                // let mouse_up_listener_2 = EventListener::new(&window(), "mouseup", move |_| {
-                //     let window_width = window().inner_width().unwrap().as_f64().unwrap();
-                //     log!("Hello", window_width);
-                //     if window_width <= window_threshhold {
-                //         is_small_window.set(true)
-                //     }  else {
-                //         is_small_window.set(false)
-                //     };
-                // });
-
                 // Cleanup listeners on unmount
                 || {
                     drop(mouse_move_listener);
@@ -146,30 +94,60 @@ pub fn resizable_layout() -> Html {
     let navigator = use_navigator().unwrap();
     let onclick = Callback::from(move |_| navigator.push(&MainPageRoute::Home));
 
-    let sections = use_state(|| vec![]);
+    // let sections = use_state(|| vec![]);
+    // let input_sections = use_state(|| vec![]);
+    // let input_text_fields = use_state(|| vec![]);
 
+    // let add_section = {
+    //     let sections = sections.clone();
+    //     let input_sections = input_sections.clone();
+    //     Callback::from(move |_| {
+    //         let mut new_sections = (*sections).clone();
+    //         let mut new_input_sections = (*input_sections).clone();
+    //         // let mut input_text_fields = input_text_fields.clone();
+    //         let is_left = new_sections.len() % 2 == 0;
+            
+    //         new_sections.push(SectionData {
+    //             content: format!("New Section {}", new_sections.len() + 1),
+    //             is_left,
+    //             image_url: String::from("https://www.medius-fitness.de/wp-content/uploads/2021/06/medius-Logo-550x120-DSV.png")
+    //         });
+    //         sections.set(new_sections);
+    //     })
+    // };
+
+    let state = use_reducer(|| SectionState { sections: vec![] });
+    let small_window = *is_small_window.clone();
     let add_section = {
-        let sections = sections.clone();
+        let state = state.clone();
         Callback::from(move |_| {
-            // Alternate between left and right sections
-            let mut new_sections = (*sections).clone();
-            let is_left = new_sections.len() % 2 == 0; // Alternate based on count
-            new_sections.push(SectionData {
-                content: format!("New Section {}", new_sections.len() + 1),
-                is_left,
-                image_url: String::from("https://www.medius-fitness.de/wp-content/uploads/2021/06/medius-Logo-550x120-DSV.png")
-            });
-            sections.set(new_sections);
+            state.dispatch(SectionAction::AddSection {is_small_window: small_window.clone()});
         })
     };
 
-    // html! {
-    //     <div>
-    //         <button onclick={add_section}>{ "Add Section" }</button>
-    //         <Sections sections={(*sections).clone()} />
-    //     </div>
-    // }
-// }
+    let remove_section = {
+        let state = state.clone();
+        Callback::from(move |_| {
+            state.dispatch(SectionAction::RemoveSection);
+        })
+    };
+
+    let input_container_style = String::from(
+        // "display: flex;
+        // "align-items: center;
+        // margin-top: 16px;"
+        
+        // "display: block; "
+        ""
+    );
+    let input_box_style = String::from(
+        // "width: 300px;
+        // height: 100px;
+        // padding: 8px;
+        // font-size: 16px;"
+        "display: block; "
+    );
+
 
     html! {
         <div style="display: flex; height: 100vh; width: 100%;">
@@ -177,6 +155,44 @@ pub fn resizable_layout() -> Html {
                 <h1>{ "Create new Newspaper" }</h1>
                 <button {onclick}>{ "Go Home" }</button>
                 <button onclick={add_section}>{ "Add Section" }</button>
+                <button onclick={remove_section}>{ "Remove Section" }</button>
+                <div>
+                { for state.sections.iter().map(|section| {
+                    let state = state.clone();
+                    let state_2 = state.clone();
+                    let id = section.id;
+                    // let id2 = id.clone();
+                    let oninput_text = Callback::from(move |e: yew::events::InputEvent| {
+                        let input: web_sys::HtmlTextAreaElement = e.target_dyn_into::<web_sys::HtmlTextAreaElement>().unwrap() ;
+                        state.dispatch(SectionAction::UpdateText { id, text: input.value() });
+                    });
+                    
+                    let on_input_image = Callback::from(move |e: yew::events::InputEvent| {
+                        let input: web_sys::HtmlInputElement = e.target_dyn_into::<web_sys::HtmlInputElement>().unwrap() ;
+                        state_2.dispatch(SectionAction::UpdateImage { id, text: input.value() });
+                    });
+
+                    html! {
+                        <div style = {input_container_style.clone()}>
+                            <label>{ format!("Text Kapitel {}", id + 1) }</label>
+                            <textarea style = {input_box_style.clone()}
+                                type="text"
+                                placeholder={format!("Section {}", id + 1)}
+                                value={section.text.clone()}
+                                oninput={oninput_text}
+                            />
+                            <label>{ format!("Bild-Url Kapitel {}", id + 1) }</label>
+                            <br />
+                            <input
+                                type="text"
+                                placeholder={format!("Section {}", id + 1)}
+                                value={section.image_url.clone()}
+                                oninput={on_input_image}
+                            />
+                        </div>
+                    }
+                })}
+                </div>
             </div>
             <div
                 style="
@@ -187,7 +203,14 @@ pub fn resizable_layout() -> Html {
                 onmousedown={on_mouse_down}
             />
             <div style={format!("width: {}%; is_small: {}", 100.0 - *left_width, *is_small_window)}>
-                <NewsLetter is_small_window={*is_small_window} dynamic_sections={(*sections).clone()}/>
+            {      
+                html! {
+                    <NewsLetter
+                    is_small_window={*is_small_window}
+                    dynamic_sections={convert_sections(&state.clone().sections)}
+                    />
+                }
+            }
             </div>
         </div>
     }
@@ -247,55 +270,4 @@ impl Component for MeneleSections {
         }
     }
 
-}
-
-use yew::{function_component, html, Html, Properties, use_state, Callback};
-// use yew::{function_component, html, use_state, Html};
-// use yew::{function_component, html, Callback, Html, Properties};
-
-#[derive(Properties, PartialEq)]
-pub struct SectionProps {
-    pub text: String,
-    pub image_url: String,
-    pub is_left: bool,
-}
-
-#[function_component(Section)]
-pub fn section(props: &SectionProps) -> Html {
-    let SectionProps {text, image_url, is_left} = props;
-    html! {
-        <div class={if *is_left { "section-left" } else { "section-right" }}>
-            { &text }
-            <img src={image_url.clone()}/>
-        </div>
-    }
-}
-
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct SectionData {
-    pub content: String,
-    pub image_url: String,
-    pub is_left: bool,
-}
-
-#[derive(Properties, PartialEq, Clone)]
-pub struct SectionsProps {
-    pub sections: Vec<SectionData>,
-}
-
-#[function_component(Sections)]
-pub fn sections(props: &SectionsProps) -> Html {
-    let SectionsProps {sections} = props;
-    html! {
-        <div class="sections-container">
-            {
-                for sections.iter().map(|section| {
-                    html! {
-                        <Section text={section.content.clone()} is_left={section.is_left} image_url = {section.image_url.clone()} />
-                    }
-                })
-            }
-        </div>
-    }
 }

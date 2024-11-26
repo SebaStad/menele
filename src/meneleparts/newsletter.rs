@@ -13,7 +13,7 @@ use crate::meneleparts::mainimage::MainImage;
 use crate::meneleparts::einleitung::Einleitung;
 use crate::meneleparts::trenner::{TrennerMitte};
 
-use crate::routes::newmenele::{SectionData, Sections};
+use crate::routes::subroutes::newmenele_right::{SectionData, Sections};
 
 #[derive(PartialEq, Properties)]
 pub struct NewsLetterProps {
