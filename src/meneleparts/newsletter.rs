@@ -34,7 +34,7 @@ pub fn NewsLetter(props: &NewsLetterProps) -> Html {
             <TrennerMitte/>
             <Sections sections={(*dynamic_sections).clone()} />
             <Footer is_small_window={*is_small_window}/>
-            // <Impressum is_small_window={*is_small_window}/>
+            <Impressum is_small_window={*is_small_window}/>
         </div>
     }
 }

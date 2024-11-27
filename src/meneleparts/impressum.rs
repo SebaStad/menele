@@ -46,7 +46,7 @@ pub fn mpressum(props: &ImpressumProps) -> Html {
                 </a>
                 <br/>
                 <br/>
-                {"Unser vollständiges Impressum finden Sie"}
+                {"Unser vollständiges Impressum finden Sie "}
                 <a href="https://www.medius-fitness.de/impressum/" target="_blank">
                     {"hier."}
                 </a>

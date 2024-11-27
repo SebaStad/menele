@@ -350,6 +350,18 @@ impl StyleConfig {
             )
         );
 
+        large_styles.insert(
+            CssClass::Impressum,
+            String::from(
+                "margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+                color: grey;
+                margin-left: 20px;
+                font-family: \"Carlito\";"
+            )
+        );
+
         Self {
             small_styles,
             large_styles,
