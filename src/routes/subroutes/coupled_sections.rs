@@ -1,6 +1,8 @@
-use yew::{function_component, html, Callback, Html, Properties, Reducible, UseReducerHandle, use_reducer, TargetCast};
-
+use gloo::net::eventsource::State;
+use yew::{function_component, html, use_reducer, Callback, Html, Properties, Reducible, TargetCast, UseReducerHandle, UseStateHandle};
+use gloo_console::log;
 use crate::routes::subroutes::newmenele_right::SectionData;
+// use crate::routes::subroutes::windowsizestate::WindowSizeState;
 
 
 #[derive(Clone, Debug, PartialEq)]
@@ -9,7 +11,7 @@ pub struct SectionRaw {
     pub text: String,
     pub image_url: String,
     pub is_left: bool,
-    pub is_small_window: bool
+    pub is_small_window: UseStateHandle<bool>
 }
 
 impl SectionRaw {
@@ -18,7 +20,7 @@ impl SectionRaw {
             content: self.text.clone(),
             image_url: self.image_url.clone(),
             is_left: self.is_left,
-            is_small_window: self.is_small_window
+            is_small_window: self.is_small_window.clone()
         }
     }
 }
@@ -33,7 +35,7 @@ pub struct SectionState {
 }
 
 pub enum SectionAction {
-    AddSection {is_small_window: bool},
+    AddSection {is_small_window: UseStateHandle<bool>},
     RemoveSection,
     UpdateText { id: usize, text: String},
     UpdateImage {id: usize, text: String}
@@ -46,6 +48,8 @@ impl Reducible for SectionState {
         match action {
             SectionAction::AddSection {is_small_window} => {
                 let mut sections = self.sections.clone();
+                log!("Hello", sections.len() % 2 == 0);
+                log!("asdasd", *is_small_window.clone());
                 sections.push(SectionRaw {
                     id: sections.len(),
                     text: String::new(),
@@ -58,7 +62,7 @@ impl Reducible for SectionState {
             SectionAction::RemoveSection => {
                 let mut sections = self.sections.clone();
                 sections.pop();
-                Self {sections}.into()
+                Self { sections }.into()
             }
             SectionAction::UpdateText { id, text } => {
                 let mut sections = self.sections.clone();
@@ -74,6 +78,7 @@ impl Reducible for SectionState {
                 }
                 Self { sections }.into()
             }
+
         }
     }
 }

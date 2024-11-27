@@ -14,7 +14,8 @@ pub enum CssClass {
     Links,
     MainImage,
     EinleitungHeader,
-    TrennerMitte
+    TrennerMitte,
+    TrennerArtikel
 }
 
 // Struct to hold the styles for both states
@@ -160,6 +161,19 @@ impl StyleConfig {
             )
         );
 
+        small_styles.insert(
+            CssClass::TrennerArtikel,
+            String::from(
+                "background-color: white;
+                color: white;
+                height: 10px;
+                width: 100%;
+                margin: 0;
+                overflow: hidden;
+                margin-bottom: 10px;"
+            )
+        );
+
         //
         //
         //
@@ -292,6 +306,19 @@ impl StyleConfig {
                 margin: 0;
                 overflow: hidden;
                 margin-bottom: 30px;;"
+            )
+        );
+
+        large_styles.insert(
+            CssClass::TrennerArtikel,
+            String::from(
+                "background-color: white;
+                color: white;
+                height: 10px;
+                width: 100%;
+                margin: 0;
+                overflow: hidden;
+                margin-bottom: 10px;"
             )
         );
 

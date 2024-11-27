@@ -117,7 +117,7 @@ pub fn resizable_layout() -> Html {
     // };
 
     let state = use_reducer(|| SectionState { sections: vec![] });
-    let small_window = *is_small_window.clone();
+    let small_window = is_small_window.clone();
     let add_section = {
         let state = state.clone();
         Callback::from(move |_| {

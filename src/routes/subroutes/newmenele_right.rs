@@ -1,5 +1,6 @@
-use yew::{function_component, html, Html, Properties, use_state, Callback};
+use yew::{function_component, html, Html, Properties, use_state, Callback, UseStateHandle};
 use crate::styling::styles::{CssClass, StyleConfig};
+use crate::meneleparts::trenner::TrennerArtikel;
 // use yew::{function_component, html, use_state, Html};
 // use yew::{function_component, html, Callback, Html, Properties};
 
@@ -59,6 +60,7 @@ pub fn section(props: &SectionProps) -> Html {
             style = {style_string_image}>
                 <img src={image_url.clone()}/>
             </div>
+            <TrennerArtikel />
         </div>
     }
 }
@@ -69,7 +71,7 @@ pub struct SectionData {
     pub content: String,
     pub image_url: String,
     pub is_left: bool,
-    pub is_small_window: bool
+    pub is_small_window: UseStateHandle<bool>
 }
 
 #[derive(Properties, PartialEq, Clone)]
@@ -85,7 +87,7 @@ pub fn sections(props: &SectionsProps) -> Html {
             {
                 for sections.iter().map(|section| {
                     html! {
-                        <Section text={section.content.clone()} is_left={section.is_left} image_url = {section.image_url.clone()} is_small_window = {section.is_small_window.clone()} />
+                        <Section text={section.content.clone()} is_left={section.is_left} image_url = {section.image_url.clone()} is_small_window = {*section.is_small_window.clone()} />
                     }
                 })
             }
