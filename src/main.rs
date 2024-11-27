@@ -14,6 +14,8 @@ mod app;
 mod styling;
 mod meneleparts;
 mod test;
+mod reducers;
+mod hooks;
 
 // use crate::app::router::{AppRoute, switch}; 
 // use crate::routes::loadmenele::LoadNewsletter;

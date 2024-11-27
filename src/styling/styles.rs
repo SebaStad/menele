@@ -15,7 +15,9 @@ pub enum CssClass {
     MainImage,
     EinleitungHeader,
     TrennerMitte,
-    TrennerArtikel
+    TrennerArtikel,
+    SonstigeHeader,
+    Impressum
 }
 
 // Struct to hold the styles for both states
@@ -174,6 +176,25 @@ impl StyleConfig {
             )
         );
 
+        small_styles.insert(
+            CssClass::SonstigeHeader,
+            String::from(
+                "font-size: 1.875em;"
+            )
+        );
+
+        small_styles.insert(
+            CssClass::Impressum,
+            String::from(
+                "margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+                color: grey;
+                margin-left: 20px;
+                font-family: \"Carlito\";"
+            )
+        );
+            
         //
         //
         //
@@ -319,6 +340,13 @@ impl StyleConfig {
                 margin: 0;
                 overflow: hidden;
                 margin-bottom: 10px;"
+            )
+        );
+
+        large_styles.insert(
+            CssClass::SonstigeHeader,
+            String::from(
+                "font-size: 1.875em;"
             )
         );
 

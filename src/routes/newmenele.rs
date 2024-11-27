@@ -20,7 +20,9 @@ use crate::meneleparts::newsletter::NewsLetter;
 
 use crate::routes::subroutes::newmenele_right::{SectionProps, SectionData, Sections};
 use crate::routes::subroutes::newmenele_left::{InputSectionData, InputSection, InputSections};
-use crate::routes::subroutes::coupled_sections::{SectionState, SectionAction, SectionRaw, convert_sections};
+use crate::routes::subroutes::coupled_sections::{SectionRaw, convert_sections};
+use crate::reducers::windowsize::{WindowSizeAction, WindowSizeState};
+use crate::reducers::sectionstate::{SectionState, SectionAction};
 
 #[function_component(NewMenele)]
 pub fn newmenele() -> Html {
@@ -36,33 +38,51 @@ pub fn newmenele() -> Html {
 
 #[function_component(ResizableLayout)]
 pub fn resizable_layout() -> Html {
-    let left_width = use_state(|| 50.0); // Left container starts at 50% width
+    let left_width = use_state(|| 50.0);
     let is_dragging = use_state(|| false);
     let is_small_window = use_state(|| false);
     let window_threshhold = 900.0;
 
+    let window_size_state = use_reducer(
+        || WindowSizeState {is_small_window: false}
+    );
+    let state = use_reducer(
+        || SectionState { sections: vec![] }
+    );
+
     use_effect_with(
-        (is_dragging.clone(), left_width.clone(), is_small_window.clone()),
+        (
+            is_dragging.clone(),
+            left_width.clone(),
+            is_small_window.clone(),
+            window_size_state.clone(),
+            state.clone()
+        ),
         {
+            let window_size_state = window_size_state.clone();
+            let state = state.clone();
             let is_dragging = is_dragging.clone();
             let left_width = left_width.clone();
             let is_small_window = is_small_window.clone();
             move |_| {
                 let is_dragging_2 = is_dragging.clone();
-                // let is_small_window = is_small_window.clone();
+
                 let mouse_move_listener = EventListener::new(&window(), "mousemove", move |e| {
                     if *is_dragging_2 {
                         let mouse_event = e.dyn_ref::<web_sys::MouseEvent>().unwrap();
                         let window_width = window().inner_width().unwrap().as_f64().unwrap();
                         let new_width = (mouse_event.client_x() as f64 / window_width.clone()) * 100.0;
-                        // let mouse_position_x = mouse_event.client_x() as f64;
                         let right_window_size = window_width - mouse_event.client_x() as f64;
                         if right_window_size <= window_threshhold {
-                            // log!("ASDF", right_window_size);
-                            is_small_window.set(true)
+                            log!("ASDF", right_window_size);
+                            is_small_window.set(true);
+                            window_size_state.dispatch(WindowSizeAction::UpdateWindowSize {is_small_window: true});
+                            state.dispatch(SectionAction::UpdateWindowSize { window_size: window_size_state.clone() })
                         }  else {
-                            // log!("Hello", right_window_size);
-                            is_small_window.set(false)
+                            log!("Hello", right_window_size);
+                            is_small_window.set(false);
+                            window_size_state.dispatch(WindowSizeAction::UpdateWindowSize {is_small_window: false});
+                            state.dispatch(SectionAction::UpdateWindowSize { window_size: window_size_state.clone() })
                         };
                         left_width.set(new_width.clamp(20.0, 80.0)); // Clamp to prevent overlap
                     }
@@ -94,34 +114,10 @@ pub fn resizable_layout() -> Html {
     let navigator = use_navigator().unwrap();
     let onclick = Callback::from(move |_| navigator.push(&MainPageRoute::Home));
 
-    // let sections = use_state(|| vec![]);
-    // let input_sections = use_state(|| vec![]);
-    // let input_text_fields = use_state(|| vec![]);
-
-    // let add_section = {
-    //     let sections = sections.clone();
-    //     let input_sections = input_sections.clone();
-    //     Callback::from(move |_| {
-    //         let mut new_sections = (*sections).clone();
-    //         let mut new_input_sections = (*input_sections).clone();
-    //         // let mut input_text_fields = input_text_fields.clone();
-    //         let is_left = new_sections.len() % 2 == 0;
-            
-    //         new_sections.push(SectionData {
-    //             content: format!("New Section {}", new_sections.len() + 1),
-    //             is_left,
-    //             image_url: String::from("https://www.medius-fitness.de/wp-content/uploads/2021/06/medius-Logo-550x120-DSV.png")
-    //         });
-    //         sections.set(new_sections);
-    //     })
-    // };
-
-    let state = use_reducer(|| SectionState { sections: vec![] });
-    let small_window = is_small_window.clone();
     let add_section = {
         let state = state.clone();
         Callback::from(move |_| {
-            state.dispatch(SectionAction::AddSection {is_small_window: small_window.clone()});
+            state.dispatch(SectionAction::AddSection {window_size: window_size_state.clone()});
         })
     };
 
@@ -160,20 +156,34 @@ pub fn resizable_layout() -> Html {
                 { for state.sections.iter().map(|section| {
                     let state = state.clone();
                     let state_2 = state.clone();
+                    let state_3 = state.clone();
                     let id = section.id;
                     // let id2 = id.clone();
+                    let oninput_chapter_title = Callback::from(move |e: yew::events::InputEvent| {
+                        let input: web_sys::HtmlInputElement = e.target_dyn_into::<web_sys::HtmlInputElement>().unwrap() ;
+                        state.dispatch(SectionAction::UpdateChapterTitle { id, text: input.value() } );
+                    });
+
                     let oninput_text = Callback::from(move |e: yew::events::InputEvent| {
                         let input: web_sys::HtmlTextAreaElement = e.target_dyn_into::<web_sys::HtmlTextAreaElement>().unwrap() ;
-                        state.dispatch(SectionAction::UpdateText { id, text: input.value() });
+                        state_2.dispatch(SectionAction::UpdateText { id, text: input.value() });
                     });
                     
                     let on_input_image = Callback::from(move |e: yew::events::InputEvent| {
                         let input: web_sys::HtmlInputElement = e.target_dyn_into::<web_sys::HtmlInputElement>().unwrap() ;
-                        state_2.dispatch(SectionAction::UpdateImage { id, text: input.value() });
+                        state_3.dispatch(SectionAction::UpdateImage { id, text: input.value() });
                     });
 
                     html! {
                         <div style = {input_container_style.clone()}>
+                            <label>{ format!("Kapitel Name {}", id + 1) }</label>
+                            <input
+                                type="text"
+                                placeholder={format!("Section {}", id + 1)}
+                                value={section.chapter_title.clone()}
+                                oninput={oninput_chapter_title}
+                            />
+                            <br />
                             <label>{ format!("Text Kapitel {}", id + 1) }</label>
                             <textarea style = {input_box_style.clone()}
                                 type="text"
@@ -216,58 +226,3 @@ pub fn resizable_layout() -> Html {
     }
 }
 
-
-
-enum MeneleSection {
-    left(MeneleSectionLeft),
-    right(MeneleSectionRight)
-}
-
-struct MeneleSectionLeft {
-}
-
-struct MeneleSectionRight {
-}
-
-
-// https://github.com/yewstack/yew/discussions/2400
-enum Msg {
-    AddOne,
-    RemoveOne,
-}
-
-#[derive(PartialEq, Properties)]
-pub struct MeneleSectionsPropsProps {}
-
-#[function_component]
-pub fn MeneleSectionsProps(props: &MeneleSectionsPropsProps) -> Html {
-    let MeneleSectionsPropsProps {} = props;
-    html! {
-        <div></div>
-    }
-}
-
-
-struct MeneleSections {
-    menele_sections: Vec<MeneleSection>
-}
-
-impl Component for MeneleSections {
-    type Message = Msg;
-    type Properties = MeneleSectionsPropsProps;
-
-    fn create(ctx: &Context<Self>) -> Self {
-        Self {
-            menele_sections: Vec::new(),
-        }
-    }
-
-    fn view(&self, ctx: &Context<Self>) -> Html {
-        let link = ctx.link();
-
-        html! {
-
-        }
-    }
-
-}

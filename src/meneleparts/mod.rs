@@ -13,3 +13,6 @@ pub mod einleitung;
 pub mod introduction;
 pub mod trenner;
 
+pub mod footer;
+pub mod impressum;
+
