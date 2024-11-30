@@ -84,3 +84,4 @@ Docs are lieing, dont use git version but 0.18 version in toml for yew-router
 * Fix bottom header-footer color.
 * Correctly define Einleitung with two images!
   * start sections vice versa etc
+* Add is_small_window as context, just as state
