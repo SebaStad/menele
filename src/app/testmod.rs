@@ -6,6 +6,9 @@ use crate::routes::newmenele::NewMenele;
 use crate::routes::loadmenele::LoadMenele;
 use crate::routes::settings::Settings;
 
+use crate::reducers::sectionstate::SectionState;
+use std::rc::Rc;
+
 #[derive(PartialEq, Properties)]
 pub struct HelloWorldProps {}
 
@@ -52,9 +55,16 @@ fn switch(routes: MainPageRoute) -> Html {
 
 #[function_component(Main)]
 pub fn app() -> Html {
+    let state = use_reducer(
+        || SectionState { sections: vec![] }
+    );
+
+
     html! {
-        <BrowserRouter>
-            <Switch<MainPageRoute> render={switch} /> // <- must be child of <BrowserRouter>
-        </BrowserRouter>
+        <ContextProvider<UseReducerHandle<SectionState>> context={state.clone()}>
+            <BrowserRouter>
+                <Switch<MainPageRoute> render={switch} /> // <- must be child of <BrowserRouter>
+            </BrowserRouter>
+        </ContextProvider<UseReducerHandle<SectionState>>>
     }
 }

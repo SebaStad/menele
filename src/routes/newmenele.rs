@@ -48,9 +48,11 @@ pub fn resizable_layout() -> Html {
     let window_size_state = use_reducer(
         || WindowSizeState {is_small_window: false}
     );
-    let state = use_reducer(
-        || SectionState { sections: vec![] }
-    );
+    // let state = use_reducer(
+    //     || SectionState { sections: vec![] }
+    // );
+
+    let state = use_context::<UseReducerHandle<SectionState>>().expect("AppState context not found");
 
     use_effect_with(
         (
