@@ -2,8 +2,10 @@ use yew::{function_component, html, Html, Properties, use_state, Callback, UseSt
 use crate::styling::styles::{CssClass, StyleConfig};
 use crate::meneleparts::trenner::TrennerArtikel;
 use gloo_console::log;
-// use yew::{function_component, html, use_state, Html};
-// use yew::{function_component, html, Callback, Html, Properties};
+
+use crate::templates::sectionleft_template::SectionleftTemplate;
+use crate::templates::sectionright_template::SectionrightTemplate;
+use crate::templates::section_enum::SectionTemplate;
 
 #[derive(Properties, PartialEq)]
 pub struct SectionProps {
@@ -91,6 +93,39 @@ pub struct SectionData {
     pub is_left: bool,
     pub is_small_window: bool
 }
+
+
+impl SectionData {
+    pub fn to_html(&self) -> String {
+        let image_url = &self.image_url;
+        let image_string = format!(
+            "<img src=\"{image_url}\">"
+        );
+
+        let template = if self.is_left {
+
+            SectionTemplate::Left(SectionleftTemplate {
+                headline: &self.chapter_title,
+                text: &self.content,
+                image: &image_string
+            })
+
+        } else {
+
+            SectionTemplate::Right(SectionrightTemplate {
+                headline: &self.chapter_title,
+                text: &self.content,
+                image: &image_string
+            })
+        };
+
+        template.render().unwrap()
+    }
+}
+
+
+
+
 
 #[derive(Properties, PartialEq, Clone)]
 pub struct SectionsProps {

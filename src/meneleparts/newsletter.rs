@@ -17,6 +17,9 @@ use crate::meneleparts::impressum::Impressum;
 
 use crate::routes::subroutes::newmenele_right::{SectionData, Sections};
 
+use crate::templates::menele_template::MeneleTemplate;
+use askama::Template;
+
 #[derive(PartialEq, Properties)]
 pub struct NewsLetterProps {
     pub is_small_window: bool,
@@ -39,3 +42,22 @@ pub fn NewsLetter(props: &NewsLetterProps) -> Html {
     }
 }
 
+impl NewsLetterProps {
+
+    pub fn to_html(&self) -> String {
+        let template = MeneleTemplate{
+            introduction_image: &String::from(
+                "<img src=\"https://www.medius-fitness.de/wp-content/uploads/2022/02/2022_RiciRing.jpg\">"
+            ),
+            sections: &self.dynamic_sections.
+                iter()
+                .map(|section| section.to_html())
+                .collect::<Vec<_>>()
+                .join("\n")
+        };
+
+        template.render().unwrap()
+
+    }
+
+}

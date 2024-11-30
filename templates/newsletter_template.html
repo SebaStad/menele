@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<title> </title>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+<div id="header">
+<h1 class="title toc-ignore"> </h1>
+</div>
+
+
+<style type="text/css">
+  .main-container {
+    max-width: 910px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: "Carlito";
+    font-family: "sans-serif";
+  }
+  div#header {
+    height: 0px;
+    width: 100%;
+    margin: 0;
+  }
+  
+  h1 {
+    font-size: 2.5em;
+    font-family: "Carlito", "sans-serif";
+    margin-left: 40px;
+    margin-top: 50px;
+  }
+  
+  div#header-footer {
+    background-color: #e30613;
+    padding-top: 45px;
+    color: white;
+    height: 350px;
+    width: 100%;
+    margin: 0;
+    font-family: "Carlito";
+  }
+  
+  .text {
+    font-weight: bold;
+    font-family: "Carlito", "sans-serif";
+  }
+  
+  .main-image{
+    margin-bottom: 20px;
+    margin-top: 10px;
+    width: 95%;
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  
+  .image-artikel {
+    margin-left: 5%;
+    margin-right: 5%;
+    width: auto;
+    height : auto;
+    float: none;
+    display: block;
+    text-align: center;
+    max-width:300px;
+  }
+  
+  .image-artikel-rechts {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    height : auto;
+    float: center;
+    display: block;
+    text-align: center;
+    max-width:300px;
+  }
+  
+  .image-artikel-links {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    height : auto;
+    float: center;
+    display: block;
+    text-align: center;
+    max-width:300px;
+  }
+  
+  [class*="image-header-footer"] {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    width: 75%;
+    height: auto;
+    display: block;
+    float: center;
+  }
+  
+  .einleitung-header {
+    font-size: 1.875em;
+    text-align: center;
+  }
+  
+  .sonstige-header {
+    font-size: 1.875em;
+  }
+  
+  .trenner-mitte {
+    background-color: #e30613;
+    color: white;
+    height: 20px;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+    margin-bottom: 30px;
+  }
+  
+  .trenner-artikel {
+    background-color: white;
+    color: white;
+    height: 10px;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  
+  .btnStack {
+    font-family: Carlito;
+    background-color: #e30613;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 1em;
+    font-weight: normal;
+    line-height: 1.428571429;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+  }
+
+  a.btnStack:hover {
+    background-color: #000;
+  }
+   
+  .link-button {
+    color: white;
+    text-align: right;
+  }
+  
+  a:link {
+    color: white;
+    background-color: #e30613;
+    text-decoration: none;
+  }l
+   
+  a:visited {
+    color: white;
+    background-color: #e30613;
+    text-decoration: none;
+  }
+   
+  a:hover {
+    color: white;
+    background-color: #e30613;
+    text-decoration: underline;
+  }
+   
+  a:active {
+    color: white;
+    background-color: #e30613;
+    text-decoration: underline;
+  }
+  
+  [class*="kapitel-text"] {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    height : auto;
+    vertical-align: bot;
+    float : center;
+  }
+    
+  .news-text {
+    width: 100%;
+    font-size: 2.5em;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    height : auto;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    float: center;
+  }
+    
+    
+  [class*="impressum"] {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  
+  .impressum {
+    color: grey;
+    margin-left: 20px;
+    font-family: "Carlito";
+  }
+  
+  div.impressum a:link {
+    color: grey;
+    background-color: white;
+    text-decoration: underline grey;
+  }
+  
+  div.impressum a:hover {
+    color: grey;
+    background-color: white;
+    text-decoration: underline grey;
+  }
+  
+  div.impressum a:visited {
+    color: #654321;
+    background-color: white;
+    text-decoration: underline grey;
+  }
+  
+  .links {
+     margin-top: 0px;
+     margin-bottom: 20px;
+     width: 100%;
+     text-align: center;
+     float: center;
+     display:inline-block;
+  }
+  
+  @media only screen and (min-width: 900px) {
+    /* For mobile phones: */
+    
+    .image-artikel {
+      margin-left: 5%;
+      margin-right: 5%;
+      width: auto;
+      height : auto;
+      float: none;
+      display: block;
+    }
+    
+    .image-artikel-rechts {
+      margin-right: 20px;
+      margin-left: 20px;
+      width : 30%;
+      height : auto;
+      float : right;
+      display : inline;
+    }
+    
+    .image-artikel-links {
+      margin-right: 20px;
+      margin-left: 20px;
+      width : 30%;
+      height : auto;
+      float : left;
+      display : inline;
+    }
+    
+    .kapitel-text-links {
+      width: 55%;
+      display: inline-block;
+      margin-left: 20px;
+      margin-right: 20px;
+      overflow: hidden;
+      float : left;
+    }
+    
+    .kapitel-text-rechts {
+      width: 55%;
+      display: inline-block;
+      margin-left: 20px;
+      margin-right: 20px;
+      overflow: hidden;
+      float : right;
+    }
+  
+    [class="links"] {
+       margin-left: 40px;
+       margin-top: 80px;
+       margin-bottom: 0px;
+       float: left;
+       width: 50%;
+       vertical-align: left;
+       text-align: left;
+       display: inline;
+    }
+    
+    [class*="news-text"]  {
+      font-size: 3.75em;
+      font-family: "Carlito", "sans-serif";
+      margin-left: 40px;
+      margin-top: 20px;
+      float: left;
+      width: 50%;
+      vertical-align: left;
+      text-align: left;
+      display: inline;
+    }
+    
+    .image-header-footer {
+      margin-right: 40px;
+      margin-top: 30px;
+      margin-left: 0;
+      width : 30%;
+      height : auto;
+      float : right;
+      position: inline;
+      display: inline;
+    }
+    
+    div#header-footer {
+      background-color: #e30613;
+      color: white;
+      height: 140px;
+      width: 100%;
+      margin: 0;
+      overflow: hidden;
+      font-family: "Carlito";
+      border-top: 0px;
+      padding-top: 0px;
+    }
+  }
+
+</style>
+<!-- nested divs/classes -->
+<div id="header-footer">
+<div class="image-header-footer">
+<p><img src="https://www.medius-fitness.de/wp-content/uploads/2022/02/Logo-rot-_medius_-2021-weiss.png"></p>
+</div>
+<div class="news-text">
+<p>medius news</p>
+</div>
+</div>
+<div class="main-image">
+<p> {{introduction_image}} </p>
+</div>
+<div class="text">
+<div class="kapitel-text-links">
+<div class="einleitung-header">
+<p>EINLEITUNG</p>
+</div>
+<div class="einleitung-text">
+<p>${content.content}</p>
+</div>
+</div>
+<div class="image-artikel-rechts">
+<p><img src="https://www.medius-fitness.de/wp-content/uploads/2022/02/Ric-2022.jpg"></p>
+</div>
+</div>
+<div class="trenner-mitte">
+</div>
+{{ sections }}
+<div class="links">
+<p><a href="https://www.facebook.com/mediusTegernsee/" title="Besuchen Sie uns auf Facebook!" target="_blank"><img src="https://www.mail-signatures.com/wp-content/uploads/2014/08/Facebook.png" width="30" height="30"></a>
+<a href="https://www.instagram.com/medius_medizinischefitness/?hl=de" id="logo-insta" title="Besuchen Sie uns auf Instagram!" target="_blank"><img src="https://cdn.exclaimer.com/Handbook%20Images/instagram-icon_square_64x64.png?_ga=3D2.47096743.1462399753.1646042707-777455659.1646042707" width="30" height="30"></a>
+<a href="https://www.medius-fitness.de" target="_blank">www.medius-fitness.de</a></p>
+</div>
+<div class="image-header-footer">
+<p><img src="https://www.medius-fitness.de/wp-content/uploads/2022/02/Logo-rot-_medius_-2021-weiss.png"></p>
+</div>
+</div>
+<div class="trenner-artikel">
+
+</div>
+<div class="impressum">
+<div class="sonstige-header">
+<p>IMPRESSUM</p>
+</div>
+<p>medius Fitness wird vertreten durch:<br> medius Schliersee GmbH &amp;
+Co. KG<br> Perfallstrasse 4<br> 83727 Schliersee<br> <br> Kontakt:<br>
+Telefon 08026 – 92 93 841<br> Telefax 08026 – 92 93 842<br> E-Mail: <a
+href="mailto:info@medius-schliersee.de"
+class="email">info@medius-schliersee.de</a><br> <br> Unser vollständiges
+Impressum finden Sie
+<a href="https://www.medius-fitness.de/impressum/" target="_blank">hier</a>.<br>
+<br> ${footer.unsubscribeLink}</p>
+</div>
+
+
+
+
+</div>
+</body>
+</html>

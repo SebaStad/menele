@@ -9,20 +9,22 @@ use wasm_bindgen::JsValue;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
 use yew::html::Scope;
-// use web_sys::{MouseEvent, window};
+use web_sys::{Blob, Url};
 use std::rc::Rc;
 use std::cell::Cell;
 
 use crate::app::testmod::MainPageRoute;
 use crate::meneleparts::header::Header;
-use crate::meneleparts::newsletter::NewsLetter;
-
+use crate::meneleparts::newsletter::{NewsLetter, NewsLetterProps};
 
 use crate::routes::subroutes::newmenele_right::{SectionProps, SectionData, Sections};
 use crate::routes::subroutes::newmenele_left::{InputSectionData, InputSection, InputSections};
 use crate::routes::subroutes::coupled_sections::{SectionRaw, convert_sections};
 use crate::reducers::windowsize::{WindowSizeAction, WindowSizeState};
 use crate::reducers::sectionstate::{SectionState, SectionAction};
+
+use std::fs::File;
+use std::io::Write;
 
 #[function_component(NewMenele)]
 pub fn newmenele() -> Html {
@@ -128,6 +130,59 @@ pub fn resizable_layout() -> Html {
         })
     };
 
+    let print_html = {
+        let state = state.clone();
+        let is_small_window = {*is_small_window};
+        Callback::from(move |_: yew::MouseEvent| {
+            let current_newsletter = NewsLetterProps {
+                is_small_window: is_small_window,
+                dynamic_sections: convert_sections(&state.clone().sections)
+            };
+            log!("{}", current_newsletter.to_html());
+            println!("{}", current_newsletter.to_html());
+            // let mut file = File::create("newsletter.html").expect("Unable to create file");
+            // file.write_all(current_newsletter.to_html().as_bytes()).expect("Unable to write data");
+        })
+    };
+
+    let export_html = {
+        let state = state.clone();
+        let is_small_window = {*is_small_window};
+        // https://www.reddit.com/r/rust/comments/15h064x/download_generated_csv_in_yew_app/
+        Callback::from(move |_: yew::MouseEvent| {
+            // Generate the HTML content
+            let current_newsletter = NewsLetterProps {
+                is_small_window,
+                dynamic_sections: convert_sections(&state.clone().sections),
+            };
+            let html_content = current_newsletter.to_html(); // Render HTML as a string
+    
+            // Create a Blob with the HTML content
+            let blob_parts = js_sys::Array::new();
+            blob_parts.push(&html_content.into());
+            let blob = Blob::new_with_str_sequence_and_options(
+                &blob_parts,
+                web_sys::BlobPropertyBag::new().type_("text/html"),
+            ).expect("Failed to create Blob");
+    
+            // Generate a URL for the Blob
+            let url = Url::create_object_url_with_blob(&blob).expect("Failed to create URL");
+    
+            // Trigger download
+            let window = window();
+            let document = window.document().expect("No document found");
+            let a = document.create_element("a").expect("Failed to create anchor element");
+            let a = a.dyn_into::<web_sys::HtmlElement>().expect("Not an anchor element");
+
+            let _ = a.set_attribute("href", &url);
+            let _ = a.set_attribute("download", "newsletter.html"); 
+            a.click(); // Simulate click
+    
+            // Clean up the URL object after use
+            Url::revoke_object_url(&url).expect("Failed to revoke object URL");
+        })
+    };
+
     let input_container_style = String::from(
         // "display: flex;
         // "align-items: center;
@@ -152,6 +207,8 @@ pub fn resizable_layout() -> Html {
                 <button {onclick}>{ "Go Home" }</button>
                 <button onclick={add_section}>{ "Add Section" }</button>
                 <button onclick={remove_section}>{ "Remove Section" }</button>
+                <button onclick={print_html}> { "Print html"} </button>
+                <button onclick={export_html}> { "Export html"} </button>
                 <div>
                 { for state.sections.iter().map(|section| {
                     let state = state.clone();

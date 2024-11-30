@@ -1,6 +1,7 @@
 use yew::{function_component, html, use_reducer, Callback, Html, Properties, Reducible, TargetCast, UseReducerHandle, UseStateHandle};
 use gloo_console::log;
 
+use crate::meneleparts::newsletter::NewsLetterProps;
 use crate::routes::subroutes::coupled_sections::SectionRaw;
 use crate::reducers::windowsize::WindowSizeState;
 
@@ -15,7 +16,8 @@ pub enum SectionAction {
     UpdateText { id: usize, text: String},
     UpdateImage {id: usize, text: String},
     UpdateChapterTitle {id: usize, text: String},
-    UpdateWindowSize {window_size: UseReducerHandle<WindowSizeState>}
+    UpdateWindowSize {window_size: UseReducerHandle<WindowSizeState>},
+    // CreateHtml {newsletter: NewsLetterProps}
 }
 
 impl Reducible for SectionState {
@@ -70,6 +72,14 @@ impl Reducible for SectionState {
                 }
                 Self { sections, ..*self}.into()
             }
+
+            // SectionAction::CreateHtml { newsletter } => {
+            //     let somestring =newsletter.to_html();
+
+            //     println!("{:?}", somestring);
+            //     Self { }.into()
+
+            // }
 
         }
     }
