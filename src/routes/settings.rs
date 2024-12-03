@@ -12,7 +12,7 @@ pub fn settings() -> Html {
     html! {
         <div>
             <CenteredContainer>
-                <h1>{ "Settings Newspaper" }</h1>
+                <h1>{ "Settings Newsletter" }</h1>
                 <button {onclick}>{ "Go Home" }</button>
             </CenteredContainer>
         </div>

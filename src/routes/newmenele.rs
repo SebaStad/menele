@@ -231,7 +231,7 @@ pub fn resizable_layout() -> Html {
     html! {
         <div style="display: flex; height: 100vh; width: 100%;">
             <div style={format!("width: {}%;", *left_width)}>
-                <h1>{ "Create new Newspaper" }</h1>
+                <h1>{ "Create new Newsletter" }</h1>
                 <button {onclick}>{ "Go Home" }</button>
                 <button onclick={add_section}>{ "Add Section" }</button>
                 <button onclick={remove_section}>{ "Remove Section" }</button>

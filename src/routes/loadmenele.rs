@@ -12,7 +12,7 @@ pub fn loadmenele() -> Html {
     html! {
         <div>
             <CenteredContainer>
-                <h1>{ "Load old Newspaper" }</h1>
+                <h1>{ "Load old Newsletter" }</h1>
                 <button {onclick}>{ "Go Home" }</button>
             </CenteredContainer>
         </div>
