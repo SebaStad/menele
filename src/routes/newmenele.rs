@@ -138,21 +138,21 @@ pub fn resizable_layout() -> Html {
         })
     };
 
-    let print_html = {
-        let state = state.clone();
-        let is_small_window = {*is_small_window};
-        Callback::from(move |_: yew::MouseEvent| {
-            let current_newsletter = NewsLetterProps {
-                is_small_window: is_small_window,
-                einleitung: introductionstate2.clone(),
-                dynamic_sections: convert_sections(&state.clone().sections)
-            };
-            log!("{}", current_newsletter.to_html());
-            println!("{}", current_newsletter.to_html());
-            // let mut file = File::create("newsletter.html").expect("Unable to create file");
-            // file.write_all(current_newsletter.to_html().as_bytes()).expect("Unable to write data");
-        })
-    };
+    // let print_html = {
+    //     let state = state.clone();
+    //     let is_small_window = {*is_small_window};
+    //     Callback::from(move |_: yew::MouseEvent| {
+    //         let current_newsletter = NewsLetterProps {
+    //             is_small_window: is_small_window,
+    //             einleitung: introductionstate2.clone(),
+    //             dynamic_sections: convert_sections(&state.clone().sections)
+    //         };
+    //         log!("{}", current_newsletter.to_html());
+    //         println!("{}", current_newsletter.to_html());
+    //         // let mut file = File::create("newsletter.html").expect("Unable to create file");
+    //         // file.write_all(current_newsletter.to_html().as_bytes()).expect("Unable to write data");
+    //     })
+    // };
 
     let export_html = {
         let state = state.clone();
@@ -235,37 +235,50 @@ pub fn resizable_layout() -> Html {
                 <button {onclick}>{ "Go Home" }</button>
                 <button onclick={add_section}>{ "Add Section" }</button>
                 <button onclick={remove_section}>{ "Remove Section" }</button>
-                <button onclick={print_html}> { "Print html"} </button>
+                // <button onclick={print_html}> { "Print html"} </button>
                 <button onclick={export_html}> { "Export html"} </button>
+                <br/>
                 <br/>
                 <div>
                     {
                         html! {
-                            <div>
-                                <label>{ String::from("Main-Image") }</label>
-                                <input
-                                    type="text"
-                                    // placeholder={String::from("Main-Image")}
-                                    value={introductionstate.main_image_url.clone()}
-                                    oninput={oninput_main_image}
-                                />
-                                <br />
-                                <label>{ String::from("Einleitung-Titel") }</label>
-                                <input
-                                    type="text"
-                                    // placeholder={String::from("Main-Image")}
-                                    value={introductionstate.introduction_title.clone()}
-                                    oninput={oninput_introduction_title}
-                                />
-                                <br />
-                                <label>{ String::from("Einleitung-Bild") }</label>
-                                <input
-                                    type="text"
-                                    // placeholder={String::from("Main-Image")}
-                                    value={introductionstate.introduction_image_url.clone()}
-                                    oninput={oninput_introduction_image}
-                                />
-                                <br />
+                            <div style="display: flex; flex-direction: column; gap: 16px;">
+                                <div style="display: flex; align-items: center;">
+                                    <label style={format!("width: {}%; display: inline-block;", *left_width.clone()-35 as f64)}>
+                                        { String::from("Main-Image") }
+                                    </label>
+                                    <input
+                                        type="text"
+                                        // placeholder={String::from("Main-Image")}
+                                        value={introductionstate.main_image_url.clone()}
+                                        oninput={oninput_main_image}
+                                        style="flex-grow: 1;"
+                                    />
+                                </div>
+                                <div style="display: flex; align-items: center;">
+                                    <label style={format!("width: {}%; display: inline-block;", *left_width.clone()-35 as f64)}>
+                                        { String::from("Einleitung-Titel") }
+                                    </label>
+                                    <input
+                                        type="text"
+                                        // placeholder={String::from("Main-Image")}
+                                        value={introductionstate.introduction_title.clone()}
+                                        oninput={oninput_introduction_title}
+                                        style="flex-grow: 1;"
+                                    />
+                                    </div>
+                                <div style="display: flex; align-items: center;">
+                                    <label style={format!("width: {}%; display: inline-block;", *left_width.clone()-35 as f64)}>
+                                        { String::from("Einleitung-Bild") }
+                                    </label>
+                                    <input
+                                        type="text"
+                                        // placeholder={String::from("Main-Image")}
+                                        value={introductionstate.introduction_image_url.clone()}
+                                        oninput={oninput_introduction_image}
+                                        style="flex-grow: 1;"
+                                    />
+                                </div>
                             </div>
                         }
                     }
@@ -300,38 +313,52 @@ pub fn resizable_layout() -> Html {
 
                     html! {
                         <div style = {input_container_style.clone()}>
-                            <label>{ format!("Kapitel Name {}", id + 1) }</label>
-                            <input
-                                type="text"
-                                placeholder={format!("Section {}", id + 1)}
-                                value={section.chapter_title.clone()}
-                                oninput={oninput_chapter_title}
-                            />
-                            <br />
-                            <label>{ format!("Text Kapitel {}", id + 1) }</label>
+                            <br/>
+                            <br/>
+                            <div style="display: flex; align-items: center;">
+                                <label style={format!("width: {}%; display: inline-block;", *left_width.clone()-35 as f64)}>
+                                    { format!("Kapitel Name {}", id + 1) }
+                                </label>
+                                <input
+                                    type="text"
+                                    placeholder={format!("Section {}", id + 1)}
+                                    value={section.chapter_title.clone()}
+                                    oninput={oninput_chapter_title}
+                                />
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                <label style={format!("width: {}%; display: inline-block;", *left_width.clone()-35 as f64)}>
+                                    { format!("Text Kapitel {}", id + 1) }
+                                </label>
                             <textarea style = {input_box_style.clone()}
                                 type="text"
                                 placeholder={format!("Section {}", id + 1)}
                                 value={section.text.clone()}
                                 oninput={oninput_text}
                             />
-                            <label>{ format!("Bild-Url Kapitel {}", id + 1) }</label>
-                            <br />
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                <label style={format!("width: {}%; display: inline-block;", *left_width.clone()-35 as f64)}>
+                                    { format!("Bild-Url Kapitel {}", id + 1) }
+                                </label>
                             <input
                                 type="text"
                                 placeholder={format!("Section {}", id + 1)}
                                 value={section.image_url.clone()}
                                 oninput={on_input_image}
                             />                            
-                            <br />
-                            <label>{ format!("Button-Link Kapitel {}", id + 1) }</label>
-                            <br />
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                <label style={format!("width: {}%; display: inline-block;", *left_width.clone()-35 as f64)}>
+                                    { format!("Button-Link Kapitel {}", id + 1) }
+                                </label>
                             <input
                                 type="text"
                                 placeholder={format!("Section {}", id + 1)}
                                 value={section.button_url.clone()}
                                 oninput={on_input_link_button}
                             />
+                            </div>
                         </div>
                     }
                 })}
