@@ -79,3 +79,9 @@ Docs are lieing, dont use git version but 0.18 version in toml for yew-router
 * Adjust variables in Props for formatting
 * Add is_small_window as context, add it to all reducers?
 * Add Import
+
+## Todo's
+
+* restructure code
+  * files
+  * functions/methods
