@@ -2,9 +2,9 @@ use std::ops::Deref;
 use yew::prelude::*;
 use gloo::utils::window;
 use gloo::events::EventListener;
-use wasm_bindgen::closure::Closure;
+// use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
-use yew::html::Scope;
+// use yew::html::Scope;
 use gloo_console::log;
 
 #[hook]

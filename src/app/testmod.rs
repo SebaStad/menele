@@ -9,7 +9,7 @@ use crate::routes::settings::Settings;
 use crate::reducers::sectionstate::SectionState;
 use crate::reducers::introductionstate::IntroductionState;
 use crate::reducers::appstate::AppState;
-use std::rc::Rc;
+// use std::rc::Rc;
 
 #[derive(PartialEq, Properties)]
 pub struct HelloWorldProps {}

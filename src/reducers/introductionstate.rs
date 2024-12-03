@@ -1,5 +1,6 @@
-use yew::{function_component, html, use_reducer, Callback, Html, Properties, Reducible, TargetCast, UseReducerHandle, UseStateHandle};
-use gloo_console::log;
+// use yew::{function_component, html, use_reducer, Callback, Html, Properties, Reducible, TargetCast, UseReducerHandle, UseStateHandle};
+use yew::Reducible;
+// use gloo_console::log;
 
 
 #[derive(Clone, Debug, PartialEq)]

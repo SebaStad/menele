@@ -3,30 +3,28 @@ use yew_router::prelude::*;
 // use yew::{use_effect_with_deps};
 use gloo::events::EventListener;
 use gloo::utils::window;
-use gloo_console::log;
-use wasm_bindgen::JsValue;
+// use gloo_console::log;
+// use wasm_bindgen::JsValue;
 
-use wasm_bindgen::closure::Closure;
+// use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
-use yew::html::Scope;
+// use yew::html::Scope;
 use web_sys::{Blob, Url};
-use std::rc::Rc;
-use std::cell::Cell;
+// use std::rc::Rc;
+// use std::cell::Cell;
 
 use crate::app::testmod::MainPageRoute;
-use crate::meneleparts::header::Header;
+// use crate::meneleparts::header::Header;
 use crate::meneleparts::newsletter::{NewsLetter, NewsLetterProps};
 
 use crate::reducers::appstate::AppState;
-use crate::routes::subroutes::newmenele_right::{SectionProps, SectionData, Sections};
-use crate::routes::subroutes::newmenele_left::{InputSectionData, InputSection, InputSections};
+// use crate::routes::subroutes::newmenele_right::{SectionProps, SectionData, Sections};
+// use crate::routes::subroutes::newmenele_left::{InputSectionData, InputSection, InputSections};
 use crate::routes::subroutes::coupled_sections::{SectionRaw, convert_sections};
 use crate::reducers::windowsize::{WindowSizeAction, WindowSizeState};
-use crate::reducers::sectionstate::{SectionState, SectionAction};
-use crate::reducers::introductionstate::{self, IntroductionAction, IntroductionState};
+use crate::reducers::sectionstate::{SectionAction};
+use crate::reducers::introductionstate::{IntroductionAction};
 
-use std::fs::File;
-use std::io::Write;
 
 #[function_component(NewMenele)]
 pub fn newmenele() -> Html {
@@ -58,7 +56,7 @@ pub fn resizable_layout() -> Html {
     // let state = use_context::<UseReducerHandle<SectionState>>().expect("AppState context not found");
     let state = &appstate.section_state;
     let introductionstate = &appstate.introduction_state;
-    let introductionstate2 = introductionstate.clone();
+    // let introductionstate2 = introductionstate.clone();
     let introductionstate3 = introductionstate.clone();
     use_effect_with(
         (

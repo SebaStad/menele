@@ -1,4 +1,4 @@
-use yew::{function_component, html, Callback, Html, Properties, Reducible, UseReducerHandle, use_reducer, TargetCast};
+use yew::{function_component, html, Callback, Html, Reducible, use_reducer, TargetCast};
 
 #[derive(Clone, Debug, PartialEq)]
 struct Section {

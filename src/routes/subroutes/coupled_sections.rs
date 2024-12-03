@@ -1,7 +1,7 @@
-use gloo::net::eventsource::State;
-use yew::{function_component, html, use_reducer, Callback, Html, Properties, Reducible, TargetCast, UseReducerHandle, UseStateHandle};
-use gloo_console::log;
-use crate::{reducers::windowsize::WindowSizeState, routes::subroutes::newmenele_right::SectionData};
+// use gloo::net::eventsource::State;
+// use yew::{function_component, html, use_reducer, Callback, Html, Properties, Reducible, TargetCast, UseReducerHandle, UseStateHandle};
+// use gloo_console::log;
+use crate::routes::subroutes::newmenele_right::SectionData;
 // use crate::routes::subroutes::windowsizestate::WindowSizeState;
 
 

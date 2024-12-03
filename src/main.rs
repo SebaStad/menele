@@ -1,13 +1,13 @@
 // mod app;
 // mod tutorial_app;
-use yew::prelude::*;
-use yew_router::prelude::*;
+// use yew::prelude::*;
+// use yew_router::prelude::*;
 // mod app;
 // use app::app::App;
 use app::testmod::Main;
-use test::test_add_section_chatgpt::AddSection;
-use test::test_textinput::StringApp;
-use test::test_coupled_input_chatgpt::CoupledApp;
+// use test::test_add_section_chatgpt::AddSection;
+// use test::test_textinput::StringApp;
+// use test::test_coupled_input_chatgpt::CoupledApp;
 
 mod routes;
 mod app;

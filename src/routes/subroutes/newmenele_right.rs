@@ -1,8 +1,8 @@
 use askama::Template;
-use yew::{function_component, html, Html, Properties, use_state, Callback, UseStateHandle};
+use yew::{function_component, html, Html, Properties};
 use crate::styling::styles::{CssClass, StyleConfig};
 use crate::meneleparts::trenner::TrennerArtikel;
-use gloo_console::log;
+// use gloo_console::log;
 
 use crate::templates::sectionleft_template::SectionleftTemplate;
 use crate::templates::sectionright_template::SectionrightTemplate;

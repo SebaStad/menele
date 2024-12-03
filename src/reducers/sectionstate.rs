@@ -1,7 +1,7 @@
-use yew::{function_component, html, use_reducer, Callback, Html, Properties, Reducible, TargetCast, UseReducerHandle, UseStateHandle};
-use gloo_console::log;
+use yew::{Reducible, UseReducerHandle};
+// use gloo_console::log;
 
-use crate::meneleparts::newsletter::NewsLetterProps;
+// use crate::meneleparts::newsletter::NewsLetterProps;
 use crate::routes::subroutes::coupled_sections::SectionRaw;
 use crate::reducers::windowsize::WindowSizeState;
 

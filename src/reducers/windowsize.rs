@@ -1,8 +1,8 @@
-use yew::{function_component, html, Callback, Html, Properties, Reducible, UseReducerHandle, use_reducer, TargetCast};
-use yew::prelude::*;
+use yew::Reducible;
+// use yew::prelude::*;
 use gloo_console::log;
 use std::rc::Rc;
-use crate::routes::subroutes::newmenele_right::SectionData;
+// use crate::routes::subroutes::newmenele_right::SectionData;
 
 
 #[derive(Clone, Debug, PartialEq)]
