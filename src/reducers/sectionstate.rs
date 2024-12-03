@@ -34,7 +34,7 @@ impl Reducible for SectionState {
                     text: String::new(),
                     image_url: String::new(),
                     button_url: String::new(),
-                    is_left: sections.len() % 2 == 0,
+                    is_left: sections.len() % 2 == 1,
                     is_small_window: window_size.is_small_window.clone()
                 });
                 Self { sections, ..*self}.into()

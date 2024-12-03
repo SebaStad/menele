@@ -301,10 +301,6 @@ function __wbg_get_imports() {
         getDataViewMemory0().setFloat64(arg0 + 8 * 1, isLikeNone(ret) ? 0 : ret, true);
         getDataViewMemory0().setInt32(arg0 + 4 * 0, !isLikeNone(ret), true);
     };
-    imports.wbg.__wbindgen_number_new = function(arg0) {
-        const ret = arg0;
-        return ret;
-    };
     imports.wbg.__wbindgen_string_new = function(arg0, arg1) {
         const ret = getStringFromWasm0(arg0, arg1);
         return ret;
@@ -439,6 +435,10 @@ function __wbg_get_imports() {
     imports.wbg.__wbindgen_boolean_get = function(arg0) {
         const v = arg0;
         const ret = typeof(v) === 'boolean' ? (v ? 1 : 0) : 2;
+        return ret;
+    };
+    imports.wbg.__wbindgen_number_new = function(arg0) {
+        const ret = arg0;
         return ret;
     };
     imports.wbg.__wbindgen_jsval_loose_eq = function(arg0, arg1) {
@@ -933,19 +933,19 @@ function __wbg_get_imports() {
         const ret = wasm.memory;
         return ret;
     };
-    imports.wbg.__wbindgen_closure_wrapper6472 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper6470 = function(arg0, arg1, arg2) {
         const ret = makeClosure(arg0, arg1, 1044, __wbg_adapter_42);
         return ret;
     };
-    imports.wbg.__wbindgen_closure_wrapper8677 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper8675 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 1133, __wbg_adapter_45);
         return ret;
     };
-    imports.wbg.__wbindgen_closure_wrapper8795 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper8793 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 1142, __wbg_adapter_48);
         return ret;
     };
-    imports.wbg.__wbindgen_closure_wrapper9534 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper9532 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 1174, __wbg_adapter_51);
         return ret;
     };

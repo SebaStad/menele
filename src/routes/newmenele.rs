@@ -84,12 +84,12 @@ pub fn resizable_layout() -> Html {
                         let new_width = (mouse_event.client_x() as f64 / window_width.clone()) * 100.0;
                         let right_window_size = window_width - mouse_event.client_x() as f64;
                         if right_window_size <= window_threshhold {
-                            log!("ASDF", right_window_size);
+                            // log!("ASDF", right_window_size);
                             is_small_window.set(true);
                             window_size_state.dispatch(WindowSizeAction::UpdateWindowSize {is_small_window: true});
                             state.dispatch(SectionAction::UpdateWindowSize { window_size: window_size_state.clone() })
                         }  else {
-                            log!("Hello", right_window_size);
+                            // log!("Hello", right_window_size);
                             is_small_window.set(false);
                             window_size_state.dispatch(WindowSizeAction::UpdateWindowSize {is_small_window: false});
                             state.dispatch(SectionAction::UpdateWindowSize { window_size: window_size_state.clone() })
