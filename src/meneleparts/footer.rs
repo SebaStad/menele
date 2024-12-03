@@ -17,9 +17,15 @@ pub fn footer(props: &FooterProps) -> Html {
     //     *is_small_window
     // ).unwrap().clone();
 
+    let style_lookup = StyleConfig::new();
+    let style_string = style_lookup.get_style(
+        CssClass::HeaderFooter,
+        *is_small_window
+    ).unwrap().clone();
+
     html! {
         <HeaderFooterStyle is_small_window={*is_small_window}>
-            <div class = "links">
+            <div class = "links" style = {style_string}>
                 <p>
                     <a href="https://www.facebook.com/mediusTegernsee/" title="Besuchen Sie uns auf Facebook!" target="_blank">
                         <img src="https://www.mail-signatures.com/wp-content/uploads/2014/08/Facebook.png" width="30" height="30"/>

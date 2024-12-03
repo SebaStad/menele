@@ -17,11 +17,13 @@ use crate::app::testmod::MainPageRoute;
 use crate::meneleparts::header::Header;
 use crate::meneleparts::newsletter::{NewsLetter, NewsLetterProps};
 
+use crate::reducers::appstate::AppState;
 use crate::routes::subroutes::newmenele_right::{SectionProps, SectionData, Sections};
 use crate::routes::subroutes::newmenele_left::{InputSectionData, InputSection, InputSections};
 use crate::routes::subroutes::coupled_sections::{SectionRaw, convert_sections};
 use crate::reducers::windowsize::{WindowSizeAction, WindowSizeState};
 use crate::reducers::sectionstate::{SectionState, SectionAction};
+use crate::reducers::introductionstate::{self, IntroductionAction, IntroductionState};
 
 use std::fs::File;
 use std::io::Write;
@@ -52,8 +54,12 @@ pub fn resizable_layout() -> Html {
     //     || SectionState { sections: vec![] }
     // );
 
-    let state = use_context::<UseReducerHandle<SectionState>>().expect("AppState context not found");
-
+    let appstate = use_context::<AppState>().expect("AppState context not found");
+    // let state = use_context::<UseReducerHandle<SectionState>>().expect("AppState context not found");
+    let state = &appstate.section_state;
+    let introductionstate = &appstate.introduction_state;
+    let introductionstate2 = introductionstate.clone();
+    let introductionstate3 = introductionstate.clone();
     use_effect_with(
         (
             is_dragging.clone(),
@@ -138,6 +144,7 @@ pub fn resizable_layout() -> Html {
         Callback::from(move |_: yew::MouseEvent| {
             let current_newsletter = NewsLetterProps {
                 is_small_window: is_small_window,
+                einleitung: introductionstate2.clone(),
                 dynamic_sections: convert_sections(&state.clone().sections)
             };
             log!("{}", current_newsletter.to_html());
@@ -154,7 +161,8 @@ pub fn resizable_layout() -> Html {
         Callback::from(move |_: yew::MouseEvent| {
             // Generate the HTML content
             let current_newsletter = NewsLetterProps {
-                is_small_window,
+                is_small_window: is_small_window,
+                einleitung: introductionstate3.clone(),
                 dynamic_sections: convert_sections(&state.clone().sections),
             };
             let html_content = current_newsletter.to_html(); // Render HTML as a string
@@ -201,6 +209,24 @@ pub fn resizable_layout() -> Html {
         "display: block; "
     );
 
+    let introductionstate_mainimage = introductionstate.clone();
+    let introductionstate_intro_title = introductionstate.clone();
+    let introductionstate_intro_image = introductionstate.clone();
+    let oninput_main_image = Callback::from(move |e: yew::events::InputEvent| {
+        let input: web_sys::HtmlInputElement = e.target_dyn_into::<web_sys::HtmlInputElement>().unwrap() ;
+        introductionstate_mainimage.dispatch(IntroductionAction::UpdateMainImage {url: input.value() } );
+    });
+
+    let oninput_introduction_title = Callback::from(move |e: yew::events::InputEvent| {
+        let input: web_sys::HtmlInputElement = e.target_dyn_into::<web_sys::HtmlInputElement>().unwrap() ;
+        introductionstate_intro_title.dispatch(IntroductionAction::UpdateTitle {text: input.value() } );
+    });
+
+    let oninput_introduction_image = Callback::from(move |e: yew::events::InputEvent| {
+        let input: web_sys::HtmlInputElement = e.target_dyn_into::<web_sys::HtmlInputElement>().unwrap() ;
+        introductionstate_intro_image.dispatch(IntroductionAction::UpdateIntroductionImage {url: input.value() } );
+    });
+
 
     html! {
         <div style="display: flex; height: 100vh; width: 100%;">
@@ -211,11 +237,45 @@ pub fn resizable_layout() -> Html {
                 <button onclick={remove_section}>{ "Remove Section" }</button>
                 <button onclick={print_html}> { "Print html"} </button>
                 <button onclick={export_html}> { "Export html"} </button>
+                <br/>
+                <div>
+                    {
+                        html! {
+                            <div>
+                                <label>{ String::from("Main-Image") }</label>
+                                <input
+                                    type="text"
+                                    // placeholder={String::from("Main-Image")}
+                                    value={introductionstate.main_image_url.clone()}
+                                    oninput={oninput_main_image}
+                                />
+                                <br />
+                                <label>{ String::from("Einleitung-Titel") }</label>
+                                <input
+                                    type="text"
+                                    // placeholder={String::from("Main-Image")}
+                                    value={introductionstate.introduction_title.clone()}
+                                    oninput={oninput_introduction_title}
+                                />
+                                <br />
+                                <label>{ String::from("Einleitung-Bild") }</label>
+                                <input
+                                    type="text"
+                                    // placeholder={String::from("Main-Image")}
+                                    value={introductionstate.introduction_image_url.clone()}
+                                    oninput={oninput_introduction_image}
+                                />
+                                <br />
+                            </div>
+                        }
+                    }
+                </div>
                 <div>
                 { for state.sections.iter().map(|section| {
                     let state = state.clone();
                     let state_2 = state.clone();
                     let state_3 = state.clone();
+                    let state_4 = state.clone();
                     let id = section.id;
                     // let id2 = id.clone();
                     let oninput_chapter_title = Callback::from(move |e: yew::events::InputEvent| {
@@ -231,6 +291,11 @@ pub fn resizable_layout() -> Html {
                     let on_input_image = Callback::from(move |e: yew::events::InputEvent| {
                         let input: web_sys::HtmlInputElement = e.target_dyn_into::<web_sys::HtmlInputElement>().unwrap() ;
                         state_3.dispatch(SectionAction::UpdateImage { id, text: input.value() });
+                    });
+
+                    let on_input_link_button = Callback::from(move |e: yew::events::InputEvent| {
+                        let input: web_sys::HtmlInputElement = e.target_dyn_into::<web_sys::HtmlInputElement>().unwrap() ;
+                        state_4.dispatch(SectionAction::UpdateLinkButton { id, text: input.value() });
                     });
 
                     html! {
@@ -257,6 +322,15 @@ pub fn resizable_layout() -> Html {
                                 placeholder={format!("Section {}", id + 1)}
                                 value={section.image_url.clone()}
                                 oninput={on_input_image}
+                            />                            
+                            <br />
+                            <label>{ format!("Button-Link Kapitel {}", id + 1) }</label>
+                            <br />
+                            <input
+                                type="text"
+                                placeholder={format!("Section {}", id + 1)}
+                                value={section.button_url.clone()}
+                                oninput={on_input_link_button}
                             />
                         </div>
                     }
@@ -271,11 +345,12 @@ pub fn resizable_layout() -> Html {
                 "
                 onmousedown={on_mouse_down}
             />
-            <div style={format!("width: {}%; is_small: {}", 100.0 - *left_width, *is_small_window)}>
+            <div style={format!("width: {}%; is_small: {}, background-color: #ffffff", 100.0 - *left_width, *is_small_window)}>
             {      
                 html! {
                     <NewsLetter
                     is_small_window={*is_small_window}
+                    einleitung={introductionstate.clone()}
                     dynamic_sections={convert_sections(&state.clone().sections)}
                     />
                 }

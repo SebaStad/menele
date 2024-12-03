@@ -7,6 +7,8 @@ use crate::routes::loadmenele::LoadMenele;
 use crate::routes::settings::Settings;
 
 use crate::reducers::sectionstate::SectionState;
+use crate::reducers::introductionstate::IntroductionState;
+use crate::reducers::appstate::AppState;
 use std::rc::Rc;
 
 #[derive(PartialEq, Properties)]
@@ -59,12 +61,29 @@ pub fn app() -> Html {
         || SectionState { sections: vec![] }
     );
 
+    let introductionstate = use_reducer(
+        || IntroductionState {
+            main_image_url: String::from("https://www.medius-fitness.de/wp-content/uploads/2022/02/2022_RiciRing.jpg"),
+            introduction_title: String::from("Einleitung"),
+            introduction_image_url: String::from("https://www.medius-fitness.de/wp-content/uploads/2022/02/Ric-2022.jpg")
+        }
+    );
 
+    let app_state = AppState {
+        section_state: state,
+        introduction_state: introductionstate
+    };
+
+    // Context provider gives me information about the state inside the browserrouter
+    // also, it is saved outside, so when i change it, it stays and is not overwritten
+    // when i go into "new" again :)
+    // This way, i should also be able to save settings?
+    // But settings only work per session i assume...
     html! {
-        <ContextProvider<UseReducerHandle<SectionState>> context={state.clone()}>
+        <ContextProvider<AppState> context={app_state}>
             <BrowserRouter>
                 <Switch<MainPageRoute> render={switch} /> // <- must be child of <BrowserRouter>
             </BrowserRouter>
-        </ContextProvider<UseReducerHandle<SectionState>>>
+        </ContextProvider<AppState>>
     }
 }

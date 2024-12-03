@@ -17,7 +17,8 @@ pub enum CssClass {
     TrennerMitte,
     TrennerArtikel,
     SonstigeHeader,
-    Impressum
+    Impressum,
+    ButtonStack
 }
 
 // Struct to hold the styles for both states
@@ -36,8 +37,9 @@ impl StyleConfig {
             "background-color: #e30613;
             padding-top: 45px;
             color: white;
-            height: 350px;
+            height: 320px;
             width: 100%;
+            float: center;
             margin: 0;
             font-family: \"Carlito\";".to_string(),
         );
@@ -50,7 +52,7 @@ impl StyleConfig {
             float: none;
             display: block;
             text-align: center;
-            max-width:300px;".to_string()
+            max-width: 300px;".to_string()
         );
         small_styles.insert(
             CssClass::ImageArtikelRechts,
@@ -192,6 +194,33 @@ impl StyleConfig {
                 color: grey;
                 margin-left: 20px;
                 font-family: \"Carlito\";"
+            )
+        );
+
+        small_styles.insert(
+            CssClass::ButtonStack,
+            String::from(
+                "font-family: Carlito;
+    background-color: #e30613;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 1em;
+    font-weight: normal;
+    line-height: 1.428571429;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;"
             )
         );
             
@@ -359,6 +388,33 @@ impl StyleConfig {
                 color: grey;
                 margin-left: 20px;
                 font-family: \"Carlito\";"
+            )
+        );
+
+        large_styles.insert(
+            CssClass::ButtonStack,
+            String::from(
+                "font-family: Carlito;
+    background-color: #e30613;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 1em;
+    font-weight: normal;
+    line-height: 1.428571429;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;"
             )
         );
 

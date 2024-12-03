@@ -17,6 +17,7 @@ pub enum SectionAction {
     UpdateImage {id: usize, text: String},
     UpdateChapterTitle {id: usize, text: String},
     UpdateWindowSize {window_size: UseReducerHandle<WindowSizeState>},
+    UpdateLinkButton {id: usize, text: String},
     // CreateHtml {newsletter: NewsLetterProps}
 }
 
@@ -32,6 +33,7 @@ impl Reducible for SectionState {
                     chapter_title: String::new(),
                     text: String::new(),
                     image_url: String::new(),
+                    button_url: String::new(),
                     is_left: sections.len() % 2 == 0,
                     is_small_window: window_size.is_small_window.clone()
                 });
@@ -73,7 +75,15 @@ impl Reducible for SectionState {
                 Self { sections, ..*self}.into()
             }
 
-            // SectionAction::CreateHtml { newsletter } => {
+            SectionAction::UpdateLinkButton { id, text }  => {
+                let mut sections = self.sections.clone();
+                if let Some(section) = sections.iter_mut().find(|s| s.id == id) {
+                    section.button_url = text;
+                }
+                Self { sections, ..*self}.into()
+            }
+
+            // SectionAction::UpdateLinkButton { newsletter } => {
             //     let somestring =newsletter.to_html();
 
             //     println!("{:?}", somestring);

@@ -77,11 +77,6 @@ Docs are lieing, dont use git version but 0.18 version in toml for yew-router
 
 
 * Adjust variables in Props for formatting
-* Add Button at section to implement a Link
-  * Make sure its rendered correctly in preview
-* Implement images in preview correctly
-* Correct background color in preview correctly
-* Fix bottom header-footer color.
-* Correctly define Einleitung with two images!
-  * start sections vice versa etc
 * Add is_small_window as context, just as state
+* Add Import
+* Format input nicely

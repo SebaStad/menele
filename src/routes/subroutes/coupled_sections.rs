@@ -11,6 +11,7 @@ pub struct SectionRaw {
     pub chapter_title: String,
     pub text: String,
     pub image_url: String,
+    pub button_url: String,
     pub is_left: bool,
     pub is_small_window: bool
 }
@@ -21,6 +22,7 @@ impl SectionRaw {
             chapter_title: self.chapter_title.clone(),
             content: self.text.clone(),
             image_url: self.image_url.clone(),
+            button_url: self.button_url.clone(),
             is_left: self.is_left,
             is_small_window: self.is_small_window
         }
