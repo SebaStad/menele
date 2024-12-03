@@ -85,3 +85,13 @@ Docs are lieing, dont use git version but 0.18 version in toml for yew-router
 * restructure code
   * files
   * functions/methods
+
+## Command Lines:
+
+Current lines of RustCode:
+
+```
+wc -l $(git ls-files | grep '.*\.rs')
+wc -l $(git ls-files | grep '.*\.html')
+
+```
