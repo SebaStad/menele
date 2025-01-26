@@ -85,6 +85,8 @@ Docs are lieing, dont use git version but 0.18 version in toml for yew-router
 * restructure code
   * files
   * functions/methods
+* Fix format of live Preview for small screens
+* Add preview in separate router
 
 ## Command Lines:
 
