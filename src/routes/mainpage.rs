@@ -23,17 +23,27 @@ pub fn home() -> Html {
                     <button onclick={
                         let onclick = onclick.clone();
                         move |_| onclick.emit(&MainPageRoute::NewMenele)
-                    }>{ "Go New" }</button>
+                    }>{ "Newsletter editieren" }</button>
                     <br/>
                     <button onclick={
                         let onclick = onclick.clone();
                         move |_| onclick.emit(&MainPageRoute::LoadMenele)
-                    }>{ "Go Load" }</button>
+                    }>{ "Newsletter Laden" }</button>
+                    <br/>
+                    <button onclick={
+                        let onclick = onclick.clone();
+                        move |_| onclick.emit(&MainPageRoute::PreviewMenele)
+                    }>{ "Newsletter Vorschau" }</button>
+                    <br/>
+                    <button onclick={
+                        let onclick = onclick.clone();
+                        move |_| onclick.emit(&MainPageRoute::HtmlMenele)
+                    }>{ "Newsletter Html-Code" }</button>
                     <br/>
                     <button onclick={
                         let onclick = onclick.clone();
                         move |_| onclick.emit(&MainPageRoute::Settings)
-                    }>{ "Go Settings" }</button>
+                    }>{ "Einstellungen" }</button>
                 </div>
         </CenteredContainer>
     }

@@ -45,6 +45,10 @@ For Android development, run:
 ```
   cargo tauri android dev
 ```
+For building app on Linux, run:
+```
+  cargo tauri build
+```
 
 ### Build for windows:
 https://v1.tauri.app/v1/guides/building/cross-platform/

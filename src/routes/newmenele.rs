@@ -28,7 +28,6 @@ use crate::reducers::introductionstate::{IntroductionAction};
 
 #[function_component(NewMenele)]
 pub fn newmenele() -> Html {
-
     html! {
         <div>
             <ResizableLayout/>
@@ -118,6 +117,19 @@ pub fn resizable_layout() -> Html {
             is_dragging.set(true);
         })
     };
+
+    // this is actually not working very well here
+    // use_effect_with(
+    //     is_dragging.clone(), 
+    //     move |_| {
+    //         let listener = EventListener::new(&window(), "resize", move |_| {
+    //             is_dragging.set(true); // Set is_dragging to true on window resize
+    //         });
+
+    //         // Cleanup on unmount
+    //         move || drop(listener)
+    //     }
+    // );
 
     let navigator = use_navigator().unwrap();
     let onclick = Callback::from(move |_| navigator.push(&MainPageRoute::Home));

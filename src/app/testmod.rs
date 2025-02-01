@@ -5,6 +5,8 @@ use crate::routes::mainpage::Home;
 use crate::routes::newmenele::NewMenele;
 use crate::routes::loadmenele::LoadMenele;
 use crate::routes::settings::Settings;
+use crate::routes::previewmenele::PreviewMenele;
+use crate::routes::htmlmenele::HtmlMenele;
 
 use crate::reducers::sectionstate::SectionState;
 use crate::reducers::introductionstate::IntroductionState;
@@ -29,6 +31,10 @@ pub enum MainPageRoute {
     #[at("/newmenele")]
     NewMenele,
     #[at("/loadmenele")]
+    PreviewMenele,
+    #[at("/previewmenele")]
+    HtmlMenele,
+    #[at("/htmlmenele")]
     LoadMenele,
     #[at("/settings")]
     Settings,
@@ -47,6 +53,12 @@ fn switch(routes: MainPageRoute) -> Html {
         },
         MainPageRoute::LoadMenele => html! {
             <LoadMenele />
+        },
+        MainPageRoute::PreviewMenele => html! {
+            <PreviewMenele />
+        },
+        MainPageRoute::HtmlMenele => html! {
+            <HtmlMenele />
         },
         MainPageRoute::Settings => html! {
             <Settings />

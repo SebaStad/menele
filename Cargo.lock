@@ -2271,6 +2271,7 @@ dependencies = [
  "gloo-file 0.3.0",
  "html5ever 0.29.0",
  "js-sys",
+ "markup5ever 0.14.0",
  "serde",
  "serde-wasm-bindgen 0.6.5",
  "wasm-bindgen",
