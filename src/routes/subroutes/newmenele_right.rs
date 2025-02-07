@@ -9,6 +9,9 @@ use crate::templates::sectionright_template::SectionrightTemplate;
 use crate::templates::section_enum::SectionTemplate;
 use crate::templates::button::ButtonTemplate;
 use crate::meneleparts::more_button::MoreButton;
+use yew::prelude::*;
+
+use crate::reducers::appstate::AppState;
 
 #[derive(Properties, PartialEq)]
 pub struct SectionProps {
@@ -24,7 +27,17 @@ pub struct SectionProps {
 pub fn section(props: &SectionProps) -> Html {
     let SectionProps {chapter_title, text, image_url, button_url, is_left, is_small_window} = props;
 
-    let deref_is_left = is_left.clone();
+    let appstate = use_context::<AppState>().expect("AppState context not found");
+
+    let global_options = appstate.start_left_state.clone();
+    let start_left = global_options.chapters_start_left;
+    
+    let deref_is_left: bool = if start_left {
+        *is_left
+    } else {
+        !*is_left
+    };
+    // let deref_is_left = is_left.clone();
 
     let style_lookup = StyleConfig::new();
 

@@ -11,6 +11,7 @@ use crate::routes::htmlmenele::HtmlMenele;
 use crate::reducers::sectionstate::SectionState;
 use crate::reducers::introductionstate::IntroductionState;
 use crate::reducers::appstate::AppState;
+use crate::reducers::globaloptions::GlobalOptions;
 // use std::rc::Rc;
 
 #[derive(PartialEq, Properties)]
@@ -81,9 +82,16 @@ pub fn app() -> Html {
         }
     );
 
+    let start_left_state = use_reducer(
+        || GlobalOptions {
+            chapters_start_left: true
+        }
+    );
+
     let app_state = AppState {
         section_state: state,
-        introduction_state: introductionstate
+        introduction_state: introductionstate,
+        start_left_state: start_left_state
     };
 
     // Context provider gives me information about the state inside the browserrouter

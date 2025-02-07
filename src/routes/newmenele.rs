@@ -241,12 +241,12 @@ pub fn resizable_layout() -> Html {
     html! {
         <div style="display: flex; height: 100vh; width: 100%;">
             <div style={format!("width: {}%;", *left_width)}>
-                <h1>{ "Create new Newsletter" }</h1>
-                <button {onclick}>{ "Go Home" }</button>
-                <button onclick={add_section}>{ "Add Section" }</button>
-                <button onclick={remove_section}>{ "Remove Section" }</button>
+                <button {onclick}>{ "Hauptseite" }</button>
+                <h1>{ "Neuer Newsletter" }</h1>
+                <button onclick={add_section}>{ "Kapitel hinzufügen" }</button>
+                <button onclick={remove_section}>{ "Kapitel entfernen" }</button>
                 // <button onclick={print_html}> { "Print html"} </button>
-                <button onclick={export_html}> { "Export html"} </button>
+                <button onclick={export_html}> { "Newsletter downloaden"} </button>
                 <br/>
                 <br/>
                 <div>
@@ -299,6 +299,7 @@ pub fn resizable_layout() -> Html {
                     let state_2 = state.clone();
                     let state_3 = state.clone();
                     let state_4 = state.clone();
+
                     let id = section.id;
                     // let id2 = id.clone();
                     let oninput_chapter_title = Callback::from(move |e: yew::events::InputEvent| {

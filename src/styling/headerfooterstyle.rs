@@ -19,7 +19,7 @@ pub fn header_footer_style(props: &HeaderFooterStyleProps) -> Html {
         *is_small_window
     ).unwrap().clone();
     html! {
-        <div style={style_string} class="header-footer" id="header-footer">
+        <div style={style_string}>
             <div>
                 { for props.children.iter() }
             </div>

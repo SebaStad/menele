@@ -4,7 +4,7 @@ use gloo::events::EventListener;
 use gloo::utils::window;
 use crate::reducers::windowsize::{WindowSizeAction, WindowSizeState};
 use wasm_bindgen::JsCast;
-use web_sys::{HtmlElement};
+use web_sys::{Document, Element, HtmlElement};
 
 use crate::app::testmod::MainPageRoute;
 use crate::reducers::appstate::AppState;
@@ -114,6 +114,7 @@ pub fn html_layout() -> Html {
         dynamic_sections: convert_sections(&state.clone().sections),
     };
     let html_content = current_newsletter.to_html(); // Render HTML as a string
+    
 
     html! {
         <div class = "html-string">
