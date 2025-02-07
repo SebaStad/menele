@@ -1,3 +1,2 @@
 #[derive(PartialEq)]
-pub struct MeneleSectionLeft {
-}
+pub struct MeneleSectionLeft {}

@@ -9,4 +9,3 @@ pub struct SectionrightTemplate<'a> {
     pub image: &'a str,
     pub url_button: &'a str,
 }
-

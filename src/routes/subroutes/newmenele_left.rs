@@ -1,4 +1,4 @@
-use yew::{function_component, html, Html, Properties, Callback, InputEvent};
+use yew::{function_component, html, Callback, Html, InputEvent, Properties};
 // use yew::{function_component, html, use_state, Html};
 // use yew::{function_component, html, Callback, Html, Properties};
 
@@ -6,12 +6,16 @@ use yew::{function_component, html, Html, Properties, Callback, InputEvent};
 pub struct InputSectionProps {
     pub text: String,
     pub image_url: String,
-    pub on_input: Callback<InputEvent>
+    pub on_input: Callback<InputEvent>,
 }
 
 #[function_component(InputSection)]
 pub fn input_section(props: &InputSectionProps) -> Html {
-    let InputSectionProps {text, image_url, on_input} = props;
+    let InputSectionProps {
+        text,
+        image_url,
+        on_input,
+    } = props;
     html! {
         <div>
             <input type="text"  value={text.clone()} oninput={on_input} />
@@ -20,12 +24,11 @@ pub fn input_section(props: &InputSectionProps) -> Html {
     }
 }
 
-
 #[derive(Clone, Debug, PartialEq)]
 pub struct InputSectionData {
     pub content: String,
     pub image_url: String,
-    pub on_input: Callback<InputEvent>
+    pub on_input: Callback<InputEvent>,
 }
 
 #[derive(Properties, PartialEq, Clone)]
@@ -35,7 +38,7 @@ pub struct InputSectionsProps {
 
 #[function_component(InputSections)]
 pub fn input_sections(props: &InputSectionsProps) -> Html {
-    let InputSectionsProps {input_sections} = props;
+    let InputSectionsProps { input_sections } = props;
     html! {
         <div class="input-sections-container">
             {

@@ -2,18 +2,17 @@
 use yew::Reducible;
 // use gloo_console::log;
 
-
 #[derive(Clone, Debug, PartialEq)]
 pub struct IntroductionState {
     pub main_image_url: String,
     pub introduction_title: String,
-    pub introduction_image_url: String
+    pub introduction_image_url: String,
 }
 
 pub enum IntroductionAction {
-    UpdateMainImage { url: String},
-    UpdateTitle {text: String},
-    UpdateIntroductionImage {url: String}
+    UpdateMainImage { url: String },
+    UpdateTitle { text: String },
+    UpdateIntroductionImage { url: String },
 }
 
 impl Reducible for IntroductionState {
@@ -28,21 +27,16 @@ impl Reducible for IntroductionState {
                 }
                 .into()
             }
-            IntroductionAction::UpdateTitle { text } => {
-                Self {
-                    introduction_title: text.clone(),
-                    ..(*self).clone()
-                }
-                .into()
+            IntroductionAction::UpdateTitle { text } => Self {
+                introduction_title: text.clone(),
+                ..(*self).clone()
             }
-            IntroductionAction::UpdateIntroductionImage { url } => {
-                Self {
-                    introduction_image_url: url.clone(),
-                    ..(*self).clone()
-                }
-                .into()
+            .into(),
+            IntroductionAction::UpdateIntroductionImage { url } => Self {
+                introduction_image_url: url.clone(),
+                ..(*self).clone()
             }
-
+            .into(),
         }
     }
 }

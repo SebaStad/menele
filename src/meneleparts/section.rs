@@ -2,19 +2,16 @@
 // use crate::meneleparts::rightmenele::MeneleSectionRight;
 // use yew::prelude::*;
 
-
 #[derive(PartialEq)]
 pub struct ImageUrl {
-    pub content: String
+    pub content: String,
 }
-
 
 #[derive(PartialEq)]
 pub struct SectionContent {
     pub text: String,
-    pub image: ImageUrl
+    pub image: ImageUrl,
 }
-
 
 // #[derive(PartialEq)]
 // pub enum MeneleSection {
@@ -28,6 +25,6 @@ pub struct SectionContent {
 //             <div>
 //             </div>
 //         }
-        
+
 //     }
 // }

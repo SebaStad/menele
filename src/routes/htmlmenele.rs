@@ -7,13 +7,12 @@ use yew_router::prelude::*;
 // use web_sys::{Document, Element, HtmlElement};
 
 use crate::app::testmod::MainPageRoute;
-use crate::reducers::appstate::AppState;
 use crate::meneleparts::newsletter::NewsLetterProps;
+use crate::reducers::appstate::AppState;
 use crate::routes::subroutes::coupled_sections::convert_sections;
 
 #[function_component(HtmlMenele)]
 pub fn htmlmenele() -> Html {
-
     let navigator = use_navigator().unwrap();
 
     let onclick = Callback::from(move |route: &MainPageRoute| navigator.push(route));
@@ -37,24 +36,23 @@ pub fn htmlmenele() -> Html {
     // let on_copy = Callback::from(move |_| {
     //     let window = window();
     //     let document = window.document().unwrap();
-    
+
     //     if let Some(pre_element) = document.get_element_by_id("html-string") {
     //         let pre_html = pre_element.unchecked_into::<HtmlElement>();
-    
+
     //         let selection = window.;
     //         let range = document.create_range().unwrap();
     //         range.select_node_contents(&pre_html).unwrap();
     //         selection.remove_all_ranges().unwrap();
     //         selection.add_range(&range).unwrap();
-    
+
     //         // Copy to clipboard
     //         document.exec_command("copy").unwrap();
     //     }
     // });
-    
 
     html! {
-        
+
         <div>
             <div style="
             display: flex;
@@ -94,11 +92,8 @@ pub fn htmlmenele() -> Html {
     }
 }
 
-
 #[function_component(HtmlLayout)]
 pub fn html_layout() -> Html {
-
-
     let appstate = use_context::<AppState>().expect("AppState context not found");
     // let state = use_context::<UseReducerHandle<SectionState>>().expect("AppState context not found");
     let state = &appstate.section_state;
@@ -110,7 +105,6 @@ pub fn html_layout() -> Html {
         dynamic_sections: convert_sections(&state.clone().sections),
     };
     let html_content = current_newsletter.to_html(); // Render HTML as a string
-    
 
     html! {
         <div class = "html-string">

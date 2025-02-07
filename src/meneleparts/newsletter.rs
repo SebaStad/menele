@@ -3,11 +3,11 @@ use yew::UseReducerHandle;
 
 use crate::meneleparts::header::Header;
 
-use crate::meneleparts::mainimage::MainImage;
 use crate::meneleparts::einleitung::Einleitung;
-use crate::meneleparts::trenner::TrennerMitte;
 use crate::meneleparts::footer::Footer;
 use crate::meneleparts::impressum::Impressum;
+use crate::meneleparts::mainimage::MainImage;
+use crate::meneleparts::trenner::TrennerMitte;
 use crate::reducers::introductionstate::IntroductionState;
 
 use crate::routes::subroutes::newmenele_right::{SectionData, Sections};
@@ -19,12 +19,16 @@ use askama::Template;
 pub struct NewsLetterProps {
     pub is_small_window: bool,
     pub einleitung: UseReducerHandle<IntroductionState>,
-    pub dynamic_sections: Vec<SectionData>
+    pub dynamic_sections: Vec<SectionData>,
 }
 
 #[function_component]
 pub fn NewsLetter(props: &NewsLetterProps) -> Html {
-    let NewsLetterProps {is_small_window, einleitung, dynamic_sections} = props;
+    let NewsLetterProps {
+        is_small_window,
+        einleitung,
+        dynamic_sections,
+    } = props;
 
     let main_image_url = einleitung.main_image_url.clone();
 
@@ -45,31 +49,25 @@ pub fn NewsLetter(props: &NewsLetterProps) -> Html {
 }
 
 impl NewsLetterProps {
-
     pub fn to_html(&self) -> String {
         let main_image_url = self.einleitung.main_image_url.clone();
-        let main_image_element = format!(
-            "<img src={main_image_url}>"
-        );
+        let main_image_element = format!("<img src={main_image_url}>");
 
         let introduction_image_url = self.einleitung.introduction_image_url.clone();
-        let introduction_image_element = format!(
-            "<img src={introduction_image_url}>"
-        );
+        let introduction_image_element = format!("<img src={introduction_image_url}>");
 
-        let template = MeneleTemplate{
+        let template = MeneleTemplate {
             main_image: &main_image_element,
             einleitung_title: &self.einleitung.introduction_title,
             einleitung_image: &introduction_image_element,
-            sections: &self.dynamic_sections.
-                iter()
+            sections: &self
+                .dynamic_sections
+                .iter()
                 .map(|section| section.to_html())
                 .collect::<Vec<_>>()
-                .join("\n")
+                .join("\n"),
         };
 
         template.render().unwrap()
-
     }
-
 }

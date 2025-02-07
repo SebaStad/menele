@@ -1,21 +1,20 @@
+use crate::styling::styles::{CssClass, StyleConfig};
 use yew::prelude::*;
-use crate::styling::styles::{StyleConfig, CssClass};
 
 #[derive(Clone, PartialEq, Properties)]
 pub struct ImpressumProps {
-    pub is_small_window: bool
+    pub is_small_window: bool,
 }
 
 #[function_component(Impressum)]
 pub fn mpressum(props: &ImpressumProps) -> Html {
-    let ImpressumProps {is_small_window, ..} = props;
+    let ImpressumProps {
+        is_small_window, ..
+    } = props;
 
     let style_lookup = StyleConfig::new();
     let style_string_header = style_lookup
-        .get_style(
-            CssClass::Impressum,
-            is_small_window.clone()
-        )
+        .get_style(CssClass::Impressum, is_small_window.clone())
         .unwrap()
         .clone();
 
@@ -26,20 +25,20 @@ pub fn mpressum(props: &ImpressumProps) -> Html {
             </div>
             <p>
                 {"medius Fitness wird vertreten durch:"}
-                <br/> 
+                <br/>
                 {"medius Schliersee GmbH & Co. KG"}
-                <br/> 
+                <br/>
                 {"Perfallstrasse 4"}
-                <br/> 
+                <br/>
                 {"83727 Schliersee"}
-                <br/> 
-                <br/> 
+                <br/>
+                <br/>
                 {"Kontakt:"}
                 <br/>
                 {"Telefon 08026 – 92 93 841"}
-                <br/> 
+                <br/>
                 {"Telefax 08026 – 92 93 842"}
-                <br/> 
+                <br/>
                 {"E-Mail: "}
                 <a href="mailto:info@medius-schliersee.de" class="email">
                     {"info@medius-schliersee.de"}
@@ -51,7 +50,7 @@ pub fn mpressum(props: &ImpressumProps) -> Html {
                     {"hier."}
                 </a>
                 <br/>
-                <br/> 
+                <br/>
             {"${footer.unsubscribeLink}"}</p>
         </div>
 

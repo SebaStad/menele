@@ -1,17 +1,17 @@
-use yew_router::prelude::*;
 use yew::prelude::*;
+use yew_router::prelude::*;
 
+use crate::routes::htmlmenele::HtmlMenele;
+use crate::routes::loadmenele::LoadMenele;
 use crate::routes::mainpage::Home;
 use crate::routes::newmenele::NewMenele;
-use crate::routes::loadmenele::LoadMenele;
-use crate::routes::settings::Settings;
 use crate::routes::previewmenele::PreviewMenele;
-use crate::routes::htmlmenele::HtmlMenele;
+use crate::routes::settings::Settings;
 
-use crate::reducers::sectionstate::SectionState;
-use crate::reducers::introductionstate::IntroductionState;
 use crate::reducers::appstate::AppState;
 use crate::reducers::globaloptions::GlobalOptions;
+use crate::reducers::introductionstate::IntroductionState;
+use crate::reducers::sectionstate::SectionState;
 // use std::rc::Rc;
 
 #[derive(PartialEq, Properties)]
@@ -70,28 +70,26 @@ fn switch(routes: MainPageRoute) -> Html {
 
 #[function_component(Main)]
 pub fn app() -> Html {
-    let state = use_reducer(
-        || SectionState { sections: vec![] }
-    );
+    let state = use_reducer(|| SectionState { sections: vec![] });
 
-    let introductionstate = use_reducer(
-        || IntroductionState {
-            main_image_url: String::from("https://www.medius-fitness.de/wp-content/uploads/2022/02/2022_RiciRing.jpg"),
-            introduction_title: String::from("Einleitung"),
-            introduction_image_url: String::from("https://www.medius-fitness.de/wp-content/uploads/2022/02/Ric-2022.jpg")
-        }
-    );
+    let introductionstate = use_reducer(|| IntroductionState {
+        main_image_url: String::from(
+            "https://www.medius-fitness.de/wp-content/uploads/2022/02/2022_RiciRing.jpg",
+        ),
+        introduction_title: String::from("Einleitung"),
+        introduction_image_url: String::from(
+            "https://www.medius-fitness.de/wp-content/uploads/2022/02/Ric-2022.jpg",
+        ),
+    });
 
-    let start_left_state = use_reducer(
-        || GlobalOptions {
-            chapters_start_left: true
-        }
-    );
+    let start_left_state = use_reducer(|| GlobalOptions {
+        chapters_start_left: true,
+    });
 
     let app_state = AppState {
         section_state: state,
         introduction_state: introductionstate,
-        start_left_state: start_left_state
+        start_left_state: start_left_state,
     };
 
     // Context provider gives me information about the state inside the browserrouter

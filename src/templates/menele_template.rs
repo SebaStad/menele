@@ -9,4 +9,3 @@ pub struct MeneleTemplate<'a> {
     pub einleitung_image: &'a str,
     pub sections: &'a str,
 }
-

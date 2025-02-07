@@ -4,7 +4,6 @@
 use crate::routes::subroutes::newmenele_right::SectionData;
 // use crate::routes::subroutes::windowsizestate::WindowSizeState;
 
-
 #[derive(Clone, Debug, PartialEq)]
 pub struct SectionRaw {
     pub id: usize,
@@ -13,7 +12,7 @@ pub struct SectionRaw {
     pub image_url: String,
     pub button_url: String,
     pub is_left: bool,
-    pub is_small_window: bool
+    pub is_small_window: bool,
 }
 
 impl SectionRaw {
@@ -24,11 +23,14 @@ impl SectionRaw {
             image_url: self.image_url.clone(),
             button_url: self.button_url.clone(),
             is_left: self.is_left,
-            is_small_window: self.is_small_window
+            is_small_window: self.is_small_window,
         }
     }
 }
 
 pub fn convert_sections(raw_sections: &Vec<SectionRaw>) -> Vec<SectionData> {
-    raw_sections.iter().map(|section| section.to_section_data()).collect()
+    raw_sections
+        .iter()
+        .map(|section| section.to_section_data())
+        .collect()
 }

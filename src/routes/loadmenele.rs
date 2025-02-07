@@ -2,23 +2,21 @@ use yew::prelude::*;
 use yew_router::prelude::*;
 
 use crate::app::testmod::MainPageRoute;
-use crate::styling::centered_container::CenteredContainer;
 use crate::reducers::appstate::AppState;
 use crate::reducers::introductionstate::IntroductionAction;
 use crate::reducers::sectionstate::SectionAction;
 use crate::reducers::windowsize::WindowSizeState;
+use crate::styling::centered_container::CenteredContainer;
 
-use gloo_file::callbacks::read_as_text;
-use gloo_file::{File, Blob};
 use gloo::utils::document;
 use gloo_console::log;
+use gloo_file::callbacks::read_as_text;
+use gloo_file::{Blob, File};
 use wasm_bindgen::JsCast;
 use web_sys::{Event, HtmlInputElement};
 
 use select::document::Document;
 use select::predicate::{Class, Name};
-
-
 
 #[function_component(LoadMenele)]
 pub fn loadmenele() -> Html {
@@ -43,15 +41,14 @@ pub fn loadmenele() -> Html {
     }
 }
 
-
 #[function_component(FileUpload)]
 fn file_upload() -> Html {
     let file_content = use_state(|| String::new());
     let reader_handle = use_state(|| None);
 
-    let window_size_state = use_reducer(
-        || WindowSizeState {is_small_window: false}
-    );
+    let window_size_state = use_reducer(|| WindowSizeState {
+        is_small_window: false,
+    });
 
     let navigator = use_navigator().unwrap();
     let change_szene = Callback::from(move |route: &MainPageRoute| navigator.push(route));
@@ -61,7 +58,7 @@ fn file_upload() -> Html {
     // yeah, idk if all this boilerplate is necessary...
     let section_state = &appstate.section_state;
     let introduction_state = &appstate.introduction_state;
-    
+
     let introductionstate_mainimage = introduction_state.clone();
     let introduction_state_intro_title = introduction_state.clone();
     let introductionstate_intro_image = introduction_state.clone();
@@ -69,7 +66,7 @@ fn file_upload() -> Html {
     let section_title_state = section_state.clone();
     let section_text_state = section_state.clone();
     let section_image_state = section_state.clone();
-    let section_button_state= section_state.clone();
+    let section_button_state = section_state.clone();
 
     let change_szene = change_szene.clone();
 
@@ -84,24 +81,21 @@ fn file_upload() -> Html {
         let section_title_state = section_title_state.clone();
         let section_text_state = section_text_state.clone();
         let section_image_state = section_image_state.clone();
-        let section_button_state= section_button_state.clone();
-        
+        let section_button_state = section_button_state.clone();
+
         let window_size_state = window_size_state.clone();
 
         let change_szene = change_szene.clone();
 
         Callback::from(move |event: Event| {
-            
-            let input: HtmlInputElement = event
-                .target()
-                .unwrap()
-                .unchecked_into::<HtmlInputElement>();
-            
+            let input: HtmlInputElement =
+                event.target().unwrap().unchecked_into::<HtmlInputElement>();
+
             if let Some(files) = input.files() {
                 if let Some(file) = files.get(0) {
                     let file_content = file_content.clone();
                     let section_state = section_state.clone();
-                
+
                     let introductionstate_mainimage = introductionstate_mainimage.clone();
                     let introduction_state_intro_title = introduction_state_intro_title.clone();
                     let introductionstate_intro_image = introductionstate_intro_image.clone();
@@ -109,25 +103,24 @@ fn file_upload() -> Html {
                     let section_title_state = section_title_state.clone();
                     let section_text_state = section_text_state.clone();
                     let section_image_state = section_image_state.clone();
-                    let section_button_state= section_button_state.clone();
+                    let section_button_state = section_button_state.clone();
 
                     let window_size_state = window_size_state.clone();
 
                     let change_szene = change_szene.clone();
 
                     let file: Blob = File::from(file).into();
-                    // log!("Selected file: {:?}", file.clone()); 
+                    // log!("Selected file: {:?}", file.clone());
                     let _reader = read_as_text(&file, move |result| {
                         match result {
                             Ok(text) => {
                                 // log!("File content: {}", text.clone());
                                 file_content.set(text.clone());
 
-                                let document = Document::from(
-                                    text.as_str()
-                                );
+                                let document = Document::from(text.as_str());
 
-                                let main_image_div = document.find(Class("main-image"))
+                                let main_image_div = document
+                                    .find(Class("main-image"))
                                     .next()
                                     .expect("No Introduction found")
                                     .find(Name("img"))
@@ -137,8 +130,13 @@ fn file_upload() -> Html {
                                     .expect("No src tag found");
 
                                 // let einleitung_header = document.find(Class("einleitung-header")).next().unwrap().text();
-                                let einleitung_text = document.find(Class("einleitung-text")).next().unwrap().text();
-                                let mut image_artikel_rechts = document.find(Class("image-artikel-rechts"));
+                                let einleitung_text = document
+                                    .find(Class("einleitung-text"))
+                                    .next()
+                                    .unwrap()
+                                    .text();
+                                let mut image_artikel_rechts =
+                                    document.find(Class("image-artikel-rechts"));
 
                                 let introduction_image = image_artikel_rechts
                                     .next()
@@ -150,34 +148,36 @@ fn file_upload() -> Html {
                                     .expect("No src tag found");
 
                                 introductionstate_mainimage.dispatch(
-                                    IntroductionAction::UpdateMainImage {url: main_image_div.to_string() }
+                                    IntroductionAction::UpdateMainImage {
+                                        url: main_image_div.to_string(),
+                                    },
                                 );
                                 introduction_state_intro_title.dispatch(
-                                    IntroductionAction::UpdateTitle {text: einleitung_text.to_string() }
+                                    IntroductionAction::UpdateTitle {
+                                        text: einleitung_text.to_string(),
+                                    },
                                 );
                                 introductionstate_intro_image.dispatch(
-                                    IntroductionAction::UpdateIntroductionImage {url: introduction_image.to_string() }
+                                    IntroductionAction::UpdateIntroductionImage {
+                                        url: introduction_image.to_string(),
+                                    },
                                 );
 
-                                let mut all_texts = document
-                                    .find(Class("text"));
-                                
-                                let _ = all_texts
-                                    .next()
-                                    .expect("First Chapter");
+                                let mut all_texts = document.find(Class("text"));
 
-                                
+                                let _ = all_texts.next().expect("First Chapter");
+
                                 let all_manual_chapters = all_texts.take(1000);
                                 let mut id: usize = 0;
                                 for chapter in all_manual_chapters {
-                                    section_state.dispatch(
-                                        SectionAction::AddSection {window_size: window_size_state.clone()}
-                                    );
+                                    section_state.dispatch(SectionAction::AddSection {
+                                        window_size: window_size_state.clone(),
+                                    });
 
-                                    let search_rechts = chapter.find(Class("image-artikel-rechts"))
-                                        .next();
-                                    let search_links = chapter.find(Class("image-artikel-links"))
-                                        .next();
+                                    let search_rechts =
+                                        chapter.find(Class("image-artikel-rechts")).next();
+                                    let search_links =
+                                        chapter.find(Class("image-artikel-links")).next();
 
                                     let chapter_title = chapter
                                         .find(Class("sonstige-header"))
@@ -186,7 +186,10 @@ fn file_upload() -> Html {
                                         .text();
 
                                     section_title_state.dispatch(
-                                        SectionAction::UpdateChapterTitle { id, text: chapter_title.to_string() }
+                                        SectionAction::UpdateChapterTitle {
+                                            id,
+                                            text: chapter_title.to_string(),
+                                        },
                                     );
                                     if Option::is_some(&search_rechts) {
                                         // image rechts -> text links -> kapitel 2 text
@@ -206,13 +209,14 @@ fn file_upload() -> Html {
                                             .attr("src")
                                             .expect("No src tag found");
 
-                                        section_text_state.dispatch(
-                                            SectionAction::UpdateText { id, text: chapter_text.to_string() }
-                                        );
-                                        section_image_state.dispatch(
-                                            SectionAction::UpdateImage { id, text: chapter_image.to_string() }
-                                        );
-
+                                        section_text_state.dispatch(SectionAction::UpdateText {
+                                            id,
+                                            text: chapter_text.to_string(),
+                                        });
+                                        section_image_state.dispatch(SectionAction::UpdateImage {
+                                            id,
+                                            text: chapter_image.to_string(),
+                                        });
                                     } else if Option::is_some(&search_links) {
                                         let chapter_text = chapter
                                             .find(Class("kapitel-eins-text"))
@@ -230,13 +234,14 @@ fn file_upload() -> Html {
                                             .attr("src")
                                             .expect("No src tag found");
 
-                                        section_text_state.dispatch(
-                                            SectionAction::UpdateText { id, text: chapter_text.to_string() }
-                                        );
-                                        section_image_state.dispatch(
-                                            SectionAction::UpdateImage { id, text: chapter_image.to_string() }
-                                        );
-
+                                        section_text_state.dispatch(SectionAction::UpdateText {
+                                            id,
+                                            text: chapter_text.to_string(),
+                                        });
+                                        section_image_state.dispatch(SectionAction::UpdateImage {
+                                            id,
+                                            text: chapter_image.to_string(),
+                                        });
                                     }
                                     let search_button = chapter.find(Class("link-button")).next();
                                     if Option::is_some(&search_button) {
@@ -247,11 +252,15 @@ fn file_upload() -> Html {
                                             .expect("No Image tag found")
                                             .attr("href")
                                             .expect("No src tag found");
-                                        section_button_state.dispatch(SectionAction::UpdateLinkButton { id, text: button_url.to_string() });
+                                        section_button_state.dispatch(
+                                            SectionAction::UpdateLinkButton {
+                                                id,
+                                                text: button_url.to_string(),
+                                            },
+                                        );
                                     }
                                     id = id + 1;
                                 }
-
                             }
                             Err(_err) => {
                                 log!("Error reading file:");
@@ -262,7 +271,6 @@ fn file_upload() -> Html {
                     reader_handle.set(Some(_reader));
                 }
             }
-
         })
     };
 
@@ -271,7 +279,6 @@ fn file_upload() -> Html {
             input.unchecked_into::<HtmlInputElement>().click();
         }
     });
-    
 
     html! {
         <div>

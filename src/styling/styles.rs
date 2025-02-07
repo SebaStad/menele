@@ -18,7 +18,7 @@ pub enum CssClass {
     TrennerArtikel,
     SonstigeHeader,
     Impressum,
-    ButtonStack
+    ButtonStack,
 }
 
 // Struct to hold the styles for both states
@@ -41,7 +41,8 @@ impl StyleConfig {
             width: 100%;
             float: center;
             margin: 0;
-            font-family: \"Carlito\";".to_string(),
+            font-family: \"Carlito\";"
+                .to_string(),
         );
         small_styles.insert(
             CssClass::ImageArtikel,
@@ -52,7 +53,8 @@ impl StyleConfig {
             float: none;
             display: block;
             text-align: center;
-            max-width: 300px;".to_string()
+            max-width: 300px;"
+                .to_string(),
         );
         small_styles.insert(
             CssClass::ImageArtikelRechts,
@@ -63,7 +65,8 @@ impl StyleConfig {
             float: center;
             display: block;
             text-align: center;
-            max-width:300px;".to_string(),
+            max-width:300px;"
+                .to_string(),
         );
         small_styles.insert(
             CssClass::ImageArtikelLinks,
@@ -74,7 +77,8 @@ impl StyleConfig {
             float: center;
             display: block;
             text-align: center;
-            max-width:300px;".to_string(),
+            max-width:300px;"
+                .to_string(),
         );
         small_styles.insert(
             CssClass::ImageHeaderFooter,
@@ -84,7 +88,8 @@ impl StyleConfig {
             width: 75%;
             height: auto;
             display: block;
-            float: center;".to_string()
+            float: center;"
+                .to_string(),
         );
 
         small_styles.insert(
@@ -95,7 +100,8 @@ impl StyleConfig {
             width: 75%;
             height: auto;
             display: block;
-            float: center;".to_string()
+            float: center;"
+                .to_string(),
         );
 
         small_styles.insert(
@@ -105,7 +111,8 @@ impl StyleConfig {
             margin-right: 5%;
             height : auto;
             vertical-align: bot;
-            float : center;".to_string()
+            float : center;"
+                .to_string(),
         );
 
         small_styles.insert(
@@ -119,7 +126,8 @@ impl StyleConfig {
             display: inline-block;
             vertical-align: middle;
             text-align: center;
-            float: center;".to_string()
+            float: center;"
+                .to_string(),
         );
 
         small_styles.insert(
@@ -129,7 +137,8 @@ impl StyleConfig {
             width: 100%;
             text-align: center;
             float: center;
-            display:inline-block;".to_string()
+            display:inline-block;"
+                .to_string(),
         );
 
         small_styles.insert(
@@ -140,16 +149,16 @@ impl StyleConfig {
                 width: 95%;
                 display:block;
                 margin-left:auto;
-                margin-right:auto;"
-            )
+                margin-right:auto;",
+            ),
         );
 
         small_styles.insert(
             CssClass::EinleitungHeader,
             String::from(
                 "font-size: 1.875em;
-                text-align: center;"
-            )
+                text-align: center;",
+            ),
         );
 
         small_styles.insert(
@@ -161,8 +170,8 @@ impl StyleConfig {
                 width: 100%;
                 margin: 0;
                 overflow: hidden;
-                margin-bottom: 30px;;"
-            )
+                margin-bottom: 30px;;",
+            ),
         );
 
         small_styles.insert(
@@ -174,15 +183,13 @@ impl StyleConfig {
                 width: 100%;
                 margin: 0;
                 overflow: hidden;
-                margin-bottom: 10px;"
-            )
+                margin-bottom: 10px;",
+            ),
         );
 
         small_styles.insert(
             CssClass::SonstigeHeader,
-            String::from(
-                "font-size: 1.875em;"
-            )
+            String::from("font-size: 1.875em;"),
         );
 
         small_styles.insert(
@@ -193,8 +200,8 @@ impl StyleConfig {
                 text-align: center;
                 color: grey;
                 margin-left: 20px;
-                font-family: \"Carlito\";"
-            )
+                font-family: \"Carlito\";",
+            ),
         );
 
         small_styles.insert(
@@ -220,10 +227,10 @@ impl StyleConfig {
     -moz-user-select: none;
     -ms-user-select: none;
     -o-user-select: none;
-    user-select: none;"
-            )
+    user-select: none;",
+            ),
         );
-            
+
         //
         //
         //
@@ -239,7 +246,8 @@ impl StyleConfig {
             overflow: hidden;
             font-family: \"Carlito\";
             border-top: 0px;
-            padding-top: 0px;".to_string(),
+            padding-top: 0px;"
+                .to_string(),
         );
         large_styles.insert(
             CssClass::ImageArtikel,
@@ -248,7 +256,8 @@ impl StyleConfig {
             width: auto;
             height : auto;
             float: none;
-            display: block;".to_string()
+            display: block;"
+                .to_string(),
         );
         large_styles.insert(
             CssClass::ImageArtikelRechts,
@@ -257,7 +266,8 @@ impl StyleConfig {
             width : 30%;
             height : auto;
             float : right;
-            display : inline;".to_string(),
+            display : inline;"
+                .to_string(),
         );
         large_styles.insert(
             CssClass::ImageArtikelLinks,
@@ -266,7 +276,8 @@ impl StyleConfig {
             width : 30%;
             height : auto;
             float : left;
-            display : inline;".to_string(),
+            display : inline;"
+                .to_string(),
         );
         large_styles.insert(
             CssClass::ImageHeaderFooter,
@@ -277,7 +288,8 @@ impl StyleConfig {
             height : auto;
             float : right;
             position: inline;
-            display: inline;".to_string()
+            display: inline;"
+                .to_string(),
         );
 
         large_styles.insert(
@@ -287,7 +299,8 @@ impl StyleConfig {
             margin-left: 20px;
             margin-right: 20px;
             overflow: hidden;
-            float : right;".to_string()
+            float : right;"
+                .to_string(),
         );
 
         large_styles.insert(
@@ -297,7 +310,8 @@ impl StyleConfig {
             margin-left: 20px;
             margin-right: 20px;
             overflow: hidden;
-            float : left;".to_string()
+            float : left;"
+                .to_string(),
         );
 
         large_styles.insert(
@@ -310,20 +324,22 @@ impl StyleConfig {
             width: 50%;
             vertical-align: left;
             text-align: left;
-            display: inline;".to_string()
+            display: inline;"
+                .to_string(),
         );
-
 
         large_styles.insert(
             CssClass::Links,
-            String::from("margin-left: 40px;
+            String::from(
+                "margin-left: 40px;
             margin-top: 80px;
             margin-bottom: 0px;
             float: left;
             width: 50%;
             vertical-align: left;
             text-align: left;
-            display: inline;")
+            display: inline;",
+            ),
         );
 
         large_styles.insert(
@@ -334,16 +350,16 @@ impl StyleConfig {
                 width: 95%;
                 display:block;
                 margin-left:auto;
-                margin-right:auto;"
-            )
+                margin-right:auto;",
+            ),
         );
 
         large_styles.insert(
             CssClass::EinleitungHeader,
             String::from(
                 "font-size: 1.875em;
-                text-align: center;"
-            )
+                text-align: center;",
+            ),
         );
 
         large_styles.insert(
@@ -355,8 +371,8 @@ impl StyleConfig {
                 width: 100%;
                 margin: 0;
                 overflow: hidden;
-                margin-bottom: 30px;;"
-            )
+                margin-bottom: 30px;;",
+            ),
         );
 
         large_styles.insert(
@@ -368,15 +384,13 @@ impl StyleConfig {
                 width: 100%;
                 margin: 0;
                 overflow: hidden;
-                margin-bottom: 10px;"
-            )
+                margin-bottom: 10px;",
+            ),
         );
 
         large_styles.insert(
             CssClass::SonstigeHeader,
-            String::from(
-                "font-size: 1.875em;"
-            )
+            String::from("font-size: 1.875em;"),
         );
 
         large_styles.insert(
@@ -387,8 +401,8 @@ impl StyleConfig {
                 text-align: center;
                 color: grey;
                 margin-left: 20px;
-                font-family: \"Carlito\";"
-            )
+                font-family: \"Carlito\";",
+            ),
         );
 
         large_styles.insert(
@@ -414,8 +428,8 @@ impl StyleConfig {
                 -moz-user-select: none;
                 -ms-user-select: none;
                 -o-user-select: none;
-                user-select: none;"
-            )
+                user-select: none;",
+            ),
         );
 
         Self {

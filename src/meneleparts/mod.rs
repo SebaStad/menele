@@ -4,11 +4,11 @@ pub mod rightmenele;
 pub mod section;
 pub mod sectionlist;
 
-pub mod newsletter;
+pub mod einleitung;
 pub mod header;
 pub mod headerimage;
 pub mod mainimage;
-pub mod einleitung;
+pub mod newsletter;
 
 pub mod introduction;
 pub mod trenner;
@@ -16,4 +16,3 @@ pub mod trenner;
 pub mod footer;
 pub mod impressum;
 pub mod more_button;
-

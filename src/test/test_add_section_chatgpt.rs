@@ -1,4 +1,4 @@
-use yew::{function_component, html, Html, Properties, use_state, Callback};
+use yew::{function_component, html, use_state, Callback, Html, Properties};
 // use yew::{function_component, html, use_state, Html};
 // use yew::{function_component, html, Callback, Html, Properties};
 
@@ -11,7 +11,11 @@ pub struct SectionProps {
 
 #[function_component(Section)]
 pub fn section(props: &SectionProps) -> Html {
-    let SectionProps {text, image_url, is_left} = props;
+    let SectionProps {
+        text,
+        image_url,
+        is_left,
+    } = props;
     html! {
         <div class={if *is_left { "section-left" } else { "section-right" }}>
             { &text }
@@ -19,7 +23,6 @@ pub fn section(props: &SectionProps) -> Html {
         </div>
     }
 }
-
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct SectionData {
@@ -35,7 +38,7 @@ pub struct SectionsProps {
 
 #[function_component(Sections)]
 pub fn sections(props: &SectionsProps) -> Html {
-    let SectionsProps {sections} = props;
+    let SectionsProps { sections } = props;
     html! {
         <div class="sections-container">
             {
@@ -48,7 +51,6 @@ pub fn sections(props: &SectionsProps) -> Html {
         </div>
     }
 }
-
 
 // use crate::components::sections::{Sections, SectionData};
 
@@ -78,4 +80,3 @@ pub fn add_section() -> Html {
         </div>
     }
 }
-

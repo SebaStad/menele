@@ -9,16 +9,16 @@ use app::testmod::Main;
 // use test::test_textinput::StringApp;
 // use test::test_coupled_input_chatgpt::CoupledApp;
 
-mod routes;
 mod app;
-mod styling;
-mod meneleparts;
-mod test;
-mod reducers;
 mod hooks;
+mod meneleparts;
+mod reducers;
+mod routes;
+mod styling;
 mod templates;
+mod test;
 
-// use crate::app::router::{AppRoute, switch}; 
+// use crate::app::router::{AppRoute, switch};
 // use crate::routes::loadmenele::LoadNewsletter;
 // use crate::routes::mainpage::Home;
 // use crate::routes::newmenele::NewNewsletter;
@@ -28,7 +28,6 @@ mod templates;
 // use tutorial_app::app::App;
 
 fn main() {
-    
     console_error_panic_hook::set_once();
     yew::Renderer::<Main>::new().render();
 }

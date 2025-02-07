@@ -3,9 +3,9 @@ use yew_router::prelude::*;
 // use yew_hooks::prelude::*;
 
 use crate::app::testmod::MainPageRoute;
-use crate::styling::centered_container::CenteredContainer;
 use crate::reducers::appstate::AppState;
 use crate::reducers::globaloptions::GlobalOptionsActions;
+use crate::styling::centered_container::CenteredContainer;
 
 #[function_component(Settings)]
 pub fn settings() -> Html {
@@ -31,7 +31,6 @@ pub fn settings() -> Html {
         </div>
     }
 }
-
 
 #[function_component(SettingsPage)]
 pub fn settings_page() -> Html {
@@ -60,5 +59,3 @@ pub fn settings_page() -> Html {
         </div>
     }
 }
-
-

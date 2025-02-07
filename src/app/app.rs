@@ -25,23 +25,20 @@ pub fn app() -> Html {
         let greet_msg = greet_msg.clone();
         let name = name.clone();
         let name2 = name.clone();
-        use_effect_with(
-            name2,
-            move |_| {
-                spawn_local(async move {
-                    if name.is_empty() {
-                        return;
-                    }
+        use_effect_with(name2, move |_| {
+            spawn_local(async move {
+                if name.is_empty() {
+                    return;
+                }
 
-                    let args = serde_wasm_bindgen::to_value(&GreetArgs { name: &*name }).unwrap();
-                    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-                    let new_msg = invoke("greet", args).await.as_string().unwrap();
-                    greet_msg.set(new_msg);
-                });
+                let args = serde_wasm_bindgen::to_value(&GreetArgs { name: &*name }).unwrap();
+                // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
+                let new_msg = invoke("greet", args).await.as_string().unwrap();
+                greet_msg.set(new_msg);
+            });
 
-                || {}
-            },
-        );
+            || {}
+        });
     }
 
     let greet = {
@@ -82,7 +79,7 @@ pub fn app() -> Html {
                 // <div class="maincolumnright">
                 //     <p>{ &*greet_msg }</p>
                 // </div>
-            </div> 
+            </div>
         </main>
     }
 }

@@ -1,4 +1,4 @@
-use yew::{function_component, html, Callback, Html, Reducible, use_reducer, TargetCast};
+use yew::{function_component, html, use_reducer, Callback, Html, Reducible, TargetCast};
 
 #[derive(Clone, Debug, PartialEq)]
 struct Section {
@@ -33,7 +33,7 @@ impl Reducible for AppState {
             AppAction::RemoveSection => {
                 let mut sections = self.sections.clone();
                 sections.pop();
-                Self {sections}.into()
+                Self { sections }.into()
             }
             AppAction::UpdateText { id, text } => {
                 let mut sections = self.sections.clone();

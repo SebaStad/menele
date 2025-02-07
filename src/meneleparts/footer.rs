@@ -1,16 +1,18 @@
-use yew::prelude::*;
-use crate::styling::styles::{StyleConfig, CssClass};
-use crate::styling::headerfooterstyle::HeaderFooterStyle;
 use crate::meneleparts::headerimage::HeaderImage;
+use crate::styling::headerfooterstyle::HeaderFooterStyle;
+use crate::styling::styles::{CssClass, StyleConfig};
+use yew::prelude::*;
 
 #[derive(Clone, PartialEq, Properties)]
 pub struct FooterProps {
-    pub is_small_window: bool
+    pub is_small_window: bool,
 }
 
 #[function_component(Footer)]
 pub fn footer(props: &FooterProps) -> Html {
-    let FooterProps {is_small_window, ..} = props;
+    let FooterProps {
+        is_small_window, ..
+    } = props;
 
     // let style_lookup = StyleConfig::new();
     // let style_string = style_lookup.get_style(
@@ -19,15 +21,15 @@ pub fn footer(props: &FooterProps) -> Html {
     // ).unwrap().clone();
 
     let style_lookup = StyleConfig::new();
-    let style_string = style_lookup.get_style(
-        CssClass::Links,
-        *is_small_window
-    ).unwrap().clone();
+    let style_string = style_lookup
+        .get_style(CssClass::Links, *is_small_window)
+        .unwrap()
+        .clone();
 
     html! {
         <HeaderFooterStyle is_small_window={*is_small_window}>
             <HeaderImage is_small_window={*is_small_window}/>
-            <div class = "links" style = {style_string}>    
+            <div class = "links" style = {style_string}>
             <p>
                 <a href="https://www.facebook.com/mediusTegernsee/" title="Besuchen Sie uns auf Facebook!" target="_blank">
                 <img src="https://www.mail-signatures.com/wp-content/uploads/2014/08/Facebook.png" width="30" height="30"/>
