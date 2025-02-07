@@ -1,26 +1,23 @@
-use std::fmt::Debug;
-
 use yew::prelude::*;
 use yew_router::prelude::*;
 
 use crate::app::testmod::MainPageRoute;
 use crate::styling::centered_container::CenteredContainer;
 use crate::reducers::appstate::AppState;
-use crate::reducers::introductionstate::{IntroductionAction};
-use crate::reducers::sectionstate::{SectionAction};
-use crate::reducers::windowsize::{WindowSizeAction, WindowSizeState};
+use crate::reducers::introductionstate::IntroductionAction;
+use crate::reducers::sectionstate::SectionAction;
+use crate::reducers::windowsize::WindowSizeState;
 
-use gloo_file::callbacks::{FileReader, read_as_text};
+use gloo_file::callbacks::read_as_text;
 use gloo_file::{File, Blob};
-use gloo::utils::format::JsValueSerdeExt;
 use gloo::utils::document;
 use gloo_console::log;
 use wasm_bindgen::JsCast;
 use web_sys::{Event, HtmlInputElement};
 
-use select::document::{Document};
-use select::predicate::{Attr, Class, Name, Predicate};
-use std::borrow::Cow;
+use select::document::Document;
+use select::predicate::{Class, Name};
+
 
 
 #[function_component(LoadMenele)]
@@ -177,9 +174,9 @@ fn file_upload() -> Html {
                                         SectionAction::AddSection {window_size: window_size_state.clone()}
                                     );
 
-                                    let mut search_rechts = chapter.find(Class("image-artikel-rechts"))
+                                    let search_rechts = chapter.find(Class("image-artikel-rechts"))
                                         .next();
-                                    let mut search_links = chapter.find(Class("image-artikel-links"))
+                                    let search_links = chapter.find(Class("image-artikel-links"))
                                         .next();
 
                                     let chapter_title = chapter

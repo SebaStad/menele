@@ -1,19 +1,15 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
-use gloo::events::EventListener;
-use gloo::utils::window;
-use crate::reducers::windowsize::{WindowSizeAction, WindowSizeState};
-use wasm_bindgen::JsCast;
-use web_sys::{Document, Element, HtmlElement};
+// use gloo::events::EventListener;
+// use gloo::utils::window;
+// use crate::reducers::windowsize::{WindowSizeAction, WindowSizeState};
+// use wasm_bindgen::JsCast;
+// use web_sys::{Document, Element, HtmlElement};
 
 use crate::app::testmod::MainPageRoute;
 use crate::reducers::appstate::AppState;
-use crate::meneleparts::newsletter::{NewsLetter, NewsLetterProps};
-use crate::routes::subroutes::coupled_sections::{SectionRaw, convert_sections};
-
-use crate::reducers::sectionstate::{SectionAction};
-use crate::reducers::introductionstate::{IntroductionAction};
-
+use crate::meneleparts::newsletter::NewsLetterProps;
+use crate::routes::subroutes::coupled_sections::convert_sections;
 
 #[function_component(HtmlMenele)]
 pub fn htmlmenele() -> Html {

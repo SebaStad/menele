@@ -1,7 +1,6 @@
-use yew::UseReducerHandle;
 use yew::Reducible;
 use std::rc::Rc;
-use gloo_console::log;
+// use gloo_console::log;
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct GlobalOptions {

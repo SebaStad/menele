@@ -12,8 +12,6 @@ use crate::reducers::introductionstate::IntroductionState;
 
 use crate::routes::subroutes::newmenele_right::{SectionData, Sections};
 
-use crate::reducers::appstate::AppState;
-
 use crate::templates::menele_template::MeneleTemplate;
 use askama::Template;
 

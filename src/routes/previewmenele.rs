@@ -3,15 +3,14 @@ use yew_router::prelude::*;
 use gloo::events::EventListener;
 use gloo::utils::window;
 use crate::reducers::windowsize::{WindowSizeAction, WindowSizeState};
-use wasm_bindgen::JsCast;
+// use wasm_bindgen::JsCast;
 
 use crate::app::testmod::MainPageRoute;
 use crate::reducers::appstate::AppState;
-use crate::meneleparts::newsletter::{NewsLetter, NewsLetterProps};
-use crate::routes::subroutes::coupled_sections::{SectionRaw, convert_sections};
+use crate::meneleparts::newsletter::NewsLetter;
+use crate::routes::subroutes::coupled_sections::convert_sections;
 
-use crate::reducers::sectionstate::{SectionAction};
-use crate::reducers::introductionstate::{IntroductionAction};
+use crate::reducers::sectionstate::SectionAction;
 
 
 #[function_component(PreviewMenele)]

@@ -20,10 +20,10 @@ use crate::meneleparts::newsletter::{NewsLetter, NewsLetterProps};
 use crate::reducers::appstate::AppState;
 // use crate::routes::subroutes::newmenele_right::{SectionProps, SectionData, Sections};
 // use crate::routes::subroutes::newmenele_left::{InputSectionData, InputSection, InputSections};
-use crate::routes::subroutes::coupled_sections::{SectionRaw, convert_sections};
+use crate::routes::subroutes::coupled_sections::convert_sections;
 use crate::reducers::windowsize::{WindowSizeAction, WindowSizeState};
-use crate::reducers::sectionstate::{SectionAction};
-use crate::reducers::introductionstate::{IntroductionAction};
+use crate::reducers::sectionstate::SectionAction;
+use crate::reducers::introductionstate::IntroductionAction;
 
 
 #[function_component(NewMenele)]
