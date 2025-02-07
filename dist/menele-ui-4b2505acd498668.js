@@ -208,14 +208,12 @@ function makeMutClosure(arg0, arg1, dtor, f) {
     return real;
 }
 function __wbg_adapter_45(arg0, arg1, arg2) {
-    wasm.closure1494_externref_shim(arg0, arg1, arg2);
+    wasm.closure1491_externref_shim(arg0, arg1, arg2);
 }
 
 function __wbg_adapter_48(arg0, arg1, arg2) {
-    wasm.closure1503_externref_shim(arg0, arg1, arg2);
+    wasm.closure1527_externref_shim(arg0, arg1, arg2);
 }
-
-function notDefined(what) { return () => { throw new Error(`${what} is not defined`); }; }
 
 function addToExternrefTable0(obj) {
     const idx = wasm.__externref_table_alloc();
@@ -242,6 +240,8 @@ function getArrayJsValueFromWasm0(ptr, len) {
     wasm.__externref_drop_slice(ptr, len);
     return result;
 }
+
+function notDefined(what) { return () => { throw new Error(`${what} is not defined`); }; }
 
 const __wbindgen_enum_BinaryType = ["blob", "arraybuffer"];
 
@@ -363,15 +363,6 @@ function __wbg_get_imports() {
         const len1 = WASM_VECTOR_LEN;
         getDataViewMemory0().setInt32(arg0 + 4 * 1, len1, true);
         getDataViewMemory0().setInt32(arg0 + 4 * 0, ptr1, true);
-    };
-    imports.wbg.__wbindgen_is_function = function(arg0) {
-        const ret = typeof(arg0) === 'function';
-        return ret;
-    };
-    imports.wbg.__wbg_queueMicrotask_c5419c06eab41e73 = typeof queueMicrotask == 'function' ? queueMicrotask : notDefined('queueMicrotask');
-    imports.wbg.__wbg_queueMicrotask_848aa4969108a57e = function(arg0) {
-        const ret = arg0.queueMicrotask;
-        return ret;
     };
     imports.wbg.__wbindgen_is_undefined = function(arg0) {
         const ret = arg0 === undefined;
@@ -840,6 +831,15 @@ function __wbg_get_imports() {
     imports.wbg.__wbg_pushState_fd9ad18c3fdad921 = function() { return handleError(function (arg0, arg1, arg2, arg3, arg4, arg5) {
         arg0.pushState(arg1, getStringFromWasm0(arg2, arg3), arg4 === 0 ? undefined : getStringFromWasm0(arg4, arg5));
     }, arguments) };
+    imports.wbg.__wbindgen_is_function = function(arg0) {
+        const ret = typeof(arg0) === 'function';
+        return ret;
+    };
+    imports.wbg.__wbg_queueMicrotask_c5419c06eab41e73 = typeof queueMicrotask == 'function' ? queueMicrotask : notDefined('queueMicrotask');
+    imports.wbg.__wbg_queueMicrotask_848aa4969108a57e = function(arg0) {
+        const ret = arg0.queueMicrotask;
+        return ret;
+    };
     imports.wbg.__wbg_new_034f913e7636e987 = function() {
         const ret = new Array();
         return ret;
@@ -981,12 +981,12 @@ function __wbg_get_imports() {
         const ret = makeClosure(arg0, arg1, 1417, __wbg_adapter_42);
         return ret;
     };
-    imports.wbg.__wbindgen_closure_wrapper12024 = function(arg0, arg1, arg2) {
-        const ret = makeMutClosure(arg0, arg1, 1495, __wbg_adapter_45);
+    imports.wbg.__wbindgen_closure_wrapper11976 = function(arg0, arg1, arg2) {
+        const ret = makeMutClosure(arg0, arg1, 1492, __wbg_adapter_45);
         return ret;
     };
-    imports.wbg.__wbindgen_closure_wrapper12142 = function(arg0, arg1, arg2) {
-        const ret = makeMutClosure(arg0, arg1, 1504, __wbg_adapter_48);
+    imports.wbg.__wbindgen_closure_wrapper15900 = function(arg0, arg1, arg2) {
+        const ret = makeMutClosure(arg0, arg1, 1528, __wbg_adapter_48);
         return ret;
     };
     imports.wbg.__wbindgen_init_externref_table = function() {
