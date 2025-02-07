@@ -86,6 +86,9 @@ Docs are lieing, dont use git version but 0.18 version in toml for yew-router
 * Copy to clipboard button in html preview
 * Check loading is working correctly
 
+* Build actual app.rs not testmod.rs
+* Move Windowsizestate to reducer folder
+
 
 ## Todo's
 
