@@ -37,7 +37,8 @@ impl StyleConfig {
             "background-color: #e30613;
             padding-top: 45px;
             color: white;
-            height: 320px;
+            max-height: 350px;
+            height: auto;
             width: 100%;
             float: center;
             margin: 0;

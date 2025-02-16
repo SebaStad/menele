@@ -79,25 +79,23 @@ Docs are lieing, dont use git version but 0.18 version in toml for yew-router
   * Implement image as code
 * Back to default Settings
 
-
-* Adjust variables in Props for formatting
-* Fix Preview html codegen
-* Select all button in html preview
-* Copy to clipboard button in html preview
-* Check loading is working correctly
-* Adjust css of red boxes at top at bottom
-
-* Build actual app.rs not testmod.rs
-* Move Windowsizestate to reducer folder
-
-
 ## Todo's
+
+* [x] Move Windowsizestate to reducer folder
+* [x] Adjust css of red boxes at top at bottom
+* [x] Add preview in separate router
+* [ ] Adjust variables in Props for formatting
+* [ ] Fix Preview html codegen
+* [ ] Select all button in html preview
+* [ ] Copy to clipboard button in html preview
+* [ ] Check loading is working correctly
+
+* [ ] Build actual app.rs not testmod.rs
+* [ ] Fix format of live Preview for small screens
 
 * restructure code
   * files
   * functions/methods
-* Fix format of live Preview for small screens
-* Add preview in separate router
 
 ## Command Lines:
 
