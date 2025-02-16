@@ -1,7 +1,7 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
 
-use crate::app::testmod::MainPageRoute;
+use crate::app::app::MainPageRoute;
 use crate::styling::centered_container::CenteredContainer;
 use crate::styling::labels::{FrontendLabels, GLOBAL_LABELS};
 

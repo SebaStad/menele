@@ -9,7 +9,7 @@ use gloo_console::log;
 
 // use web_sys::selection::Selection;
 
-use crate::app::testmod::MainPageRoute;
+use crate::app::app::MainPageRoute;
 use crate::meneleparts::newsletter::NewsLetterProps;
 use crate::reducers::appstate::AppState;
 use crate::routes::subroutes::coupled_sections::convert_sections;

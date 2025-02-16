@@ -2,7 +2,7 @@ use yew::prelude::*;
 use yew_router::prelude::*;
 // use yew_hooks::prelude::*;
 
-use crate::app::testmod::MainPageRoute;
+use crate::app::app::MainPageRoute;
 use crate::reducers::appstate::AppState;
 use crate::reducers::globaloptions::GlobalOptionsActions;
 use crate::styling::centered_container::CenteredContainer;

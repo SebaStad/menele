@@ -1,85 +1,107 @@
-use serde::{Deserialize, Serialize};
-use wasm_bindgen::prelude::*;
-use wasm_bindgen_futures::spawn_local;
 use yew::prelude::*;
+use yew_router::prelude::*;
 
-#[wasm_bindgen]
-extern "C" {
-    #[wasm_bindgen(js_namespace = ["window", "__TAURI__", "core"])]
-    async fn invoke(cmd: &str, args: JsValue) -> JsValue;
-}
+use crate::routes::htmlmenele::HtmlMenele;
+use crate::routes::loadmenele::LoadMenele;
+use crate::routes::mainpage::Home;
+use crate::routes::newmenele::NewMenele;
+use crate::routes::previewmenele::PreviewMenele;
+use crate::routes::settings::Settings;
 
-#[derive(Serialize, Deserialize)]
-struct GreetArgs<'a> {
-    name: &'a str,
-}
+use crate::reducers::appstate::AppState;
+use crate::reducers::globaloptions::GlobalOptions;
+use crate::reducers::introductionstate::IntroductionState;
+use crate::reducers::sectionstate::SectionState;
+// use std::rc::Rc;
 
-#[function_component(App)]
-pub fn app() -> Html {
-    let greet_input_ref = use_node_ref();
+#[derive(PartialEq, Properties)]
+pub struct HelloWorldProps {}
 
-    let name = use_state(|| String::new());
-
-    let greet_msg = use_state(|| String::new());
-    {
-        let greet_msg = greet_msg.clone();
-        let name = name.clone();
-        let name2 = name.clone();
-        use_effect_with(name2, move |_| {
-            spawn_local(async move {
-                if name.is_empty() {
-                    return;
-                }
-
-                let args = serde_wasm_bindgen::to_value(&GreetArgs { name: &*name }).unwrap();
-                // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-                let new_msg = invoke("greet", args).await.as_string().unwrap();
-                greet_msg.set(new_msg);
-            });
-
-            || {}
-        });
+#[function_component]
+pub fn HelloWorld(props: &HelloWorldProps) -> Html {
+    let HelloWorldProps {} = props;
+    html! {
+        <div></div>
     }
+}
 
-    let greet = {
-        let name = name.clone();
-        let greet_input_ref = greet_input_ref.clone();
-        Callback::from(move |e: SubmitEvent| {
-            e.prevent_default();
-            name.set(
-                greet_input_ref
-                    .cast::<web_sys::HtmlInputElement>()
-                    .unwrap()
-                    .value(),
-            );
-        })
+#[derive(Clone, Routable, PartialEq)]
+pub enum MainPageRoute {
+    #[at("/")]
+    Home,
+    #[at("/newmenele")]
+    NewMenele,
+    #[at("/loadmenele")]
+    PreviewMenele,
+    #[at("/previewmenele")]
+    HtmlMenele,
+    #[at("/htmlmenele")]
+    LoadMenele,
+    #[at("/settings")]
+    Settings,
+    #[not_found]
+    #[at("/404")]
+    NotFound,
+}
+
+fn switch(routes: MainPageRoute) -> Html {
+    match routes {
+        MainPageRoute::Home => html! {
+            <Home />
+        },
+        MainPageRoute::NewMenele => html! {
+            <NewMenele />
+        },
+        MainPageRoute::LoadMenele => html! {
+            <LoadMenele />
+        },
+        MainPageRoute::PreviewMenele => html! {
+            <PreviewMenele />
+        },
+        MainPageRoute::HtmlMenele => html! {
+            <HtmlMenele />
+        },
+        MainPageRoute::Settings => html! {
+            <Settings />
+        },
+        MainPageRoute::NotFound => html! { <h1>{ "404" }</h1> },
+    }
+}
+
+#[function_component(Main)]
+pub fn app() -> Html {
+    let state = use_reducer(|| SectionState { sections: vec![] });
+
+    let introductionstate = use_reducer(|| IntroductionState {
+        main_image_url: String::from(
+            "https://www.medius-fitness.de/wp-content/uploads/2022/02/2022_RiciRing.jpg",
+        ),
+        introduction_title: String::from("Einleitung"),
+        introduction_image_url: String::from(
+            "https://www.medius-fitness.de/wp-content/uploads/2022/02/Ric-2022.jpg",
+        ),
+    });
+
+    let start_left_state = use_reducer(|| GlobalOptions {
+        chapters_start_left: true,
+    });
+
+    let app_state = AppState {
+        section_state: state,
+        introduction_state: introductionstate,
+        start_left_state: start_left_state,
     };
 
+    // Context provider gives me information about the state inside the browserrouter
+    // also, it is saved outside, so when i change it, it stays and is not overwritten
+    // when i go into "new" again :)
+    // This way, i should also be able to save settings?
+    // But settings only work per session i assume...
     html! {
-        <main class="container">
-            <div class={classes!("mainpage")}>
-                // <div class="maincolumnleft">
-                    <h1>{"Welcome to MeNeLe"}</h1>
-
-                    <div class="row">
-                        <a href="https://tauri.app" target="_blank">
-                            <img src="public/tauri.svg" class="logo tauri" alt="Tauri logo"/>
-                        </a>
-                        <a href="https://yew.rs" target="_blank">
-                            <img src="public/yew.png" class="logo yew" alt="Yew logo"/>
-                        </a>
-                    </div>
-                    <p>{"Click on the Tauri and Yew logos to learn more."}</p>
-
-                    <form class="row" onsubmit={greet}>
-                        <input id="greet-input" ref={greet_input_ref} placeholder="Enter a name..." />
-                        <button type="submit">{"Greet"}</button>
-                    </form>
-                // </div>
-                // <div class="maincolumnright">
-                //     <p>{ &*greet_msg }</p>
-                // </div>
-            </div>
-        </main>
+        <ContextProvider<AppState> context={app_state}>
+            <BrowserRouter>
+                <Switch<MainPageRoute> render={switch} /> // <- must be child of <BrowserRouter>
+            </BrowserRouter>
+        </ContextProvider<AppState>>
     }
 }

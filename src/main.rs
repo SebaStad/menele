@@ -4,7 +4,7 @@
 // use yew_router::prelude::*;
 // mod app;
 // use app::app::App;
-use app::testmod::Main;
+use app::app::Main;
 // use test::test_add_section_chatgpt::AddSection;
 // use test::test_textinput::StringApp;
 // use test::test_coupled_input_chatgpt::CoupledApp;

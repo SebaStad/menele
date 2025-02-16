@@ -85,12 +85,12 @@ Docs are lieing, dont use git version but 0.18 version in toml for yew-router
 * [x] Adjust css of red boxes at top at bottom
 * [x] Add preview in separate router
 * [ ] Adjust variables in Props for formatting
-* [ ] Fix Preview html codegen
-* [ ] Select all button in html preview
-* [ ] Copy to clipboard button in html preview
+* [x] Fix Preview html codegen
+* [x] Select all button in html preview
+* [x] Copy to clipboard button in html preview
 * [ ] Check loading is working correctly
 
-* [ ] Build actual app.rs not testmod.rs
+* [x] Build actual app.rs not testmod.rs
 * [ ] Fix format of live Preview for small screens
 
 * restructure code

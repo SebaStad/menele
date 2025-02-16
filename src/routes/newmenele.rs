@@ -13,7 +13,7 @@ use web_sys::{Blob, Url};
 // use std::rc::Rc;
 // use std::cell::Cell;
 
-use crate::app::testmod::MainPageRoute;
+use crate::app::app::MainPageRoute;
 // use crate::meneleparts::header::Header;
 use crate::meneleparts::newsletter::{NewsLetter, NewsLetterProps};
 

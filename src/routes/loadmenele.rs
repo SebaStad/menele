@@ -1,7 +1,7 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
 
-use crate::app::testmod::MainPageRoute;
+use crate::app::app::MainPageRoute;
 use crate::reducers::appstate::AppState;
 use crate::reducers::introductionstate::IntroductionAction;
 use crate::reducers::sectionstate::SectionAction;

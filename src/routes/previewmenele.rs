@@ -5,7 +5,7 @@ use yew::prelude::*;
 use yew_router::prelude::*;
 // use wasm_bindgen::JsCast;
 
-use crate::app::testmod::MainPageRoute;
+use crate::app::app::MainPageRoute;
 use crate::meneleparts::newsletter::NewsLetter;
 use crate::reducers::appstate::AppState;
 use crate::routes::subroutes::coupled_sections::convert_sections;
