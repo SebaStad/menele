@@ -6,12 +6,17 @@ use crate::app::testmod::MainPageRoute;
 use crate::reducers::appstate::AppState;
 use crate::reducers::globaloptions::GlobalOptionsActions;
 use crate::styling::centered_container::CenteredContainer;
+use crate::styling::labels::{self, FrontendLabels, GLOBAL_LABELS};
 
 #[function_component(Settings)]
 pub fn settings() -> Html {
     let navigator = use_navigator().unwrap();
 
     let onclick = Callback::from(move |route: &MainPageRoute| navigator.push(route));
+
+    let labels = GLOBAL_LABELS
+        .read()
+        .expect("Settings Labels");
     html! {
         <div>
             <CenteredContainer>
@@ -21,12 +26,20 @@ pub fn settings() -> Html {
                 <button onclick={
                     let onclick = onclick.clone();
                     move |_| onclick.emit(&MainPageRoute::Home)
-                }>{ "Hauptseite" }</button>
+                }>{ 
+                    labels
+                        .get_label(FrontendLabels::MainPage)
+                        .expect("Settings Expect")
+                 }</button>
                 <br/>
                 <button onclick={
                     let onclick = onclick.clone();
                     move |_| onclick.emit(&MainPageRoute::NewMenele)
-                }>{ "Newsletter editieren" }</button>
+                }>{ 
+                    labels
+                        .get_label(FrontendLabels::Edit)
+                        .expect("Settings Expect")
+                 }</button>
             </CenteredContainer>
         </div>
     }

@@ -10,12 +10,15 @@ use crate::app::testmod::MainPageRoute;
 use crate::meneleparts::newsletter::NewsLetterProps;
 use crate::reducers::appstate::AppState;
 use crate::routes::subroutes::coupled_sections::convert_sections;
+use crate::styling::labels::{FrontendLabels, GLOBAL_LABELS};
 
 #[function_component(HtmlMenele)]
 pub fn htmlmenele() -> Html {
     let navigator = use_navigator().unwrap();
 
     let onclick = Callback::from(move |route: &MainPageRoute| navigator.push(route));
+
+    let labels = GLOBAL_LABELS.read().unwrap();
 
     // let on_select_all = Callback::from(move |_| {
     //     let window = window();
@@ -62,27 +65,57 @@ pub fn htmlmenele() -> Html {
                 <button onclick={
                     let onclick = onclick.clone();
                     move |_| onclick.emit(&MainPageRoute::Home)
-                }>{ "Startseite" }</button>
+                }>{ 
+                    labels
+                        .get_label(
+                            FrontendLabels::MainPage
+                        )
+                        .unwrap()
+                 }</button>
                 <br/>
                 <button onclick={
                     let onclick = onclick.clone();
                     move |_| onclick.emit(&MainPageRoute::NewMenele)
-                }>{ "Newsletter editieren" }</button>
+                }>{                     
+                    labels
+                        .get_label(
+                            FrontendLabels::Edit
+                        )
+                        .unwrap()
+                 }</button>
                 <br/>
                 <button onclick={
                     let onclick = onclick.clone();
                     move |_| onclick.emit(&MainPageRoute::LoadMenele)
-                }>{ "Newsletter Laden" }</button>
+                }>{                     
+                    labels
+                        .get_label(
+                            FrontendLabels::Load
+                        )
+                        .unwrap()
+                 }</button>
                 <br/>
                 <button onclick={
                     let onclick = onclick.clone();
                     move |_| onclick.emit(&MainPageRoute::PreviewMenele)
-                }>{ "Newsletter Vorschau" }</button>
+                }>{ 
+                    labels
+                        .get_label(
+                            FrontendLabels::Preview
+                        )
+                        .unwrap()
+                 }</button>
                 <br/>
                 <button onclick={
                     let onclick = onclick.clone();
                     move |_| onclick.emit(&MainPageRoute::Settings)
-                }>{ "Einstellungen" }</button>
+                }>{ 
+                    labels
+                        .get_label(
+                            FrontendLabels::Settings
+                        )
+                        .unwrap()
+                 }</button>
                 </div>
             <br/>
             <hr/>

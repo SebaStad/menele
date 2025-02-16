@@ -9,7 +9,7 @@ use crate::app::testmod::MainPageRoute;
 use crate::meneleparts::newsletter::NewsLetter;
 use crate::reducers::appstate::AppState;
 use crate::routes::subroutes::coupled_sections::convert_sections;
-
+use crate::styling::labels::{FrontendLabels, GLOBAL_LABELS};
 use crate::reducers::sectionstate::SectionAction;
 
 #[function_component(PreviewMenele)]
@@ -17,6 +17,10 @@ pub fn previewmenele() -> Html {
     let navigator = use_navigator().unwrap();
 
     let onclick = Callback::from(move |route: &MainPageRoute| navigator.push(route));
+
+    let labels = GLOBAL_LABELS
+        .read()
+        .expect("Expect global labels");
 
     html! {
 
@@ -29,27 +33,47 @@ pub fn previewmenele() -> Html {
                 <button onclick={
                     let onclick = onclick.clone();
                     move |_| onclick.emit(&MainPageRoute::Home)
-                }>{ "Startseite" }</button>
+                }>{ 
+                    labels
+                        .get_label(FrontendLabels::MainPage)
+                        .expect("Another label")
+                 }</button>
                 <br/>
                 <button onclick={
                     let onclick = onclick.clone();
                     move |_| onclick.emit(&MainPageRoute::NewMenele)
-                }>{ "Newsletter editieren" }</button>
+                }>{ 
+                    labels
+                        .get_label(FrontendLabels::Edit)
+                        .expect("Another label")
+                 }</button>
                 <br/>
                 <button onclick={
                     let onclick = onclick.clone();
                     move |_| onclick.emit(&MainPageRoute::LoadMenele)
-                }>{ "Newsletter Laden" }</button>
+                }>{ 
+                    labels
+                        .get_label(FrontendLabels::Load)
+                        .expect("Another label")
+                 }</button>
                 <br/>
                 <button onclick={
                     let onclick = onclick.clone();
                     move |_| onclick.emit(&MainPageRoute::HtmlMenele)
-                }>{ "Newsletter Html-Code" }</button>
+                }>{ 
+                    labels
+                        .get_label(FrontendLabels::HtmlCode)
+                        .expect("Another label")
+                 }</button>
                 <br/>
                 <button onclick={
                     let onclick = onclick.clone();
                     move |_| onclick.emit(&MainPageRoute::Settings)
-                }>{ "Einstellungen" }</button>
+                }>{ 
+                    labels
+                        .get_label(FrontendLabels::Settings)
+                        .expect("Another label")
+                 }</button>
                 </div>
             <br/>
             <hr/>

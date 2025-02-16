@@ -24,6 +24,7 @@ use crate::reducers::introductionstate::IntroductionAction;
 use crate::reducers::sectionstate::SectionAction;
 use crate::reducers::windowsize::{WindowSizeAction, WindowSizeState};
 use crate::routes::subroutes::coupled_sections::convert_sections;
+use crate::styling::labels::{FrontendLabels, GLOBAL_LABELS};
 
 #[function_component(NewMenele)]
 pub fn newmenele() -> Html {
@@ -257,10 +258,16 @@ pub fn resizable_layout() -> Html {
             .dispatch(IntroductionAction::UpdateIntroductionImage { url: input.value() });
     });
 
+    let labels = GLOBAL_LABELS.read().expect("Global labels");
+
     html! {
         <div style="display: flex; height: 100vh; width: 100%;">
             <div style={format!("width: {}%;", *left_width)}>
-                <button {onclick}>{ "Hauptseite" }</button>
+                <button {onclick}>{ 
+                    labels
+                        .get_label(FrontendLabels::MainPage)
+                        .expect("Frontendmainlabel")
+                 }</button>
                 <h1>{ "Neuer Newsletter" }</h1>
                 <button onclick={add_section}>{ "Kapitel hinzufügen" }</button>
                 <button onclick={remove_section}>{ "Kapitel entfernen" }</button>

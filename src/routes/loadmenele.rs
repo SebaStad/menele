@@ -7,6 +7,7 @@ use crate::reducers::introductionstate::IntroductionAction;
 use crate::reducers::sectionstate::SectionAction;
 use crate::reducers::windowsize::WindowSizeState;
 use crate::styling::centered_container::CenteredContainer;
+use crate::styling::labels::{FrontendLabels, GLOBAL_LABELS};
 
 use gloo::utils::document;
 use gloo_console::log;
@@ -23,6 +24,7 @@ pub fn loadmenele() -> Html {
     let navigator = use_navigator().unwrap();
 
     let onclick = Callback::from(move |route: &MainPageRoute| navigator.push(route));
+    let labels = GLOBAL_LABELS.read().expect("Some Lock");
 
     // let onclick_read_newspaper: Callback<MouseEvent> = Callback::from(
     //     move |_| navigator.push(&MainPageRoute::NewMenele)
@@ -34,7 +36,11 @@ pub fn loadmenele() -> Html {
                 <button onclick={
                     let onclick = onclick.clone();
                     move |_| onclick.emit(&MainPageRoute::Home)
-                }>{ "Hauptseite" }</button>
+                }>{ 
+                    labels
+                        .get_label(FrontendLabels::MainPage)
+                        .expect("MainpageLabel")
+                 }</button>
                 <FileUpload/>
             </CenteredContainer>
         </div>
@@ -54,6 +60,8 @@ fn file_upload() -> Html {
     let change_szene = Callback::from(move |route: &MainPageRoute| navigator.push(route));
 
     let appstate = use_context::<AppState>().expect("AppState context not found");
+
+    let labels = GLOBAL_LABELS.read().expect("Some Lock");
 
     // yeah, idk if all this boilerplate is necessary...
     let section_state = &appstate.section_state;
@@ -283,7 +291,11 @@ fn file_upload() -> Html {
     html! {
         <div>
             <input id="file-upload" type="file" accept=".html" style="display: none;" onchange={on_file_change} />
-            <button onclick={on_button_click}>{"Html-Newsletter auswählen"}</button>
+            <button onclick={on_button_click}>{
+                labels
+                    .get_label(FrontendLabels::Search)
+                    .expect("Search Label")
+            }</button>
         </div>
     }
 }
