@@ -1,10 +1,13 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
-// use gloo::events::EventListener;
-// use gloo::utils::window;
-// use crate::reducers::windowsize::{WindowSizeAction, WindowSizeState};
-// use wasm_bindgen::JsCast;
-// use web_sys::{Document, Element, HtmlElement};
+use gloo::events::EventListener;
+use gloo::utils::window;
+use crate::reducers::windowsize::{WindowSizeAction, WindowSizeState};
+use wasm_bindgen::JsCast;
+use web_sys::{Document, Element, HtmlElement, Window, Selection};
+use gloo_console::log;
+
+// use web_sys::selection::Selection;
 
 use crate::app::testmod::MainPageRoute;
 use crate::meneleparts::newsletter::NewsLetterProps;
@@ -20,39 +23,45 @@ pub fn htmlmenele() -> Html {
 
     let labels = GLOBAL_LABELS.read().unwrap();
 
-    // let on_select_all = Callback::from(move |_| {
-    //     let window = window();
-    //     let document = window.document().unwrap();
+    let on_select_all = Callback::from(move |_: MouseEvent| {
+        let window: Window = window();
+        let document = window.document().unwrap();
+        let all_relevant_documents = document.get_elements_by_class_name("html-string");
+    
+        if let Some(pre_element) = all_relevant_documents.get_with_index(0) {
+            let pre_html = pre_element.unchecked_into::<HtmlElement>();
 
-    //     if let Some(pre_element) = document.get_element_by_id("html-string") {
-    //         let pre_html = pre_element.unchecked_into::<HtmlElement>();
+            // Create a selection range
+            // let window_2 = window.clone();
+            let selection = window.get_selection().unwrap().unwrap();
+            let range = document.create_range().unwrap();
+            range.select_node_contents(&pre_html).unwrap();
+            selection.remove_all_ranges().unwrap();
+            selection.add_range(&range).unwrap();
+        }
+    });
 
-    //         // Create a selection range
-    //         let selection = window.get_selection().unwrap();
-    //         let range = document.create_range().unwrap();
-    //         range.select_node_contents(&pre_html).unwrap();
-    //         selection.remove_all_ranges().unwrap();
-    //         selection.add_range(&range).unwrap();
-    //     }
-    // });
+    let on_copy = Callback::from(move |_: MouseEvent| {
+        let window: Window = window();
+        let document = window.document().unwrap();
 
-    // let on_copy = Callback::from(move |_| {
-    //     let window = window();
-    //     let document = window.document().unwrap();
-
-    //     if let Some(pre_element) = document.get_element_by_id("html-string") {
-    //         let pre_html = pre_element.unchecked_into::<HtmlElement>();
-
-    //         let selection = window.;
-    //         let range = document.create_range().unwrap();
-    //         range.select_node_contents(&pre_html).unwrap();
-    //         selection.remove_all_ranges().unwrap();
-    //         selection.add_range(&range).unwrap();
-
-    //         // Copy to clipboard
-    //         document.exec_command("copy").unwrap();
-    //     }
-    // });
+        let all_relevant_documents = document.get_elements_by_class_name("html-string");
+    
+        if let Some(pre_element) = all_relevant_documents.get_with_index(0) {
+            let pre_html = pre_element.unchecked_into::<HtmlElement>();
+            let text_to_copy = pre_html.inner_text(); // Extract the text inside <pre>
+    
+            let thenavigator: web_sys::Navigator = window.navigator();
+            let clipboard = thenavigator.clipboard();
+            let promise = clipboard.write_text(&text_to_copy);
+    
+            wasm_bindgen_futures::spawn_local(async move {
+                if let Err(e) = wasm_bindgen_futures::JsFuture::from(promise).await {
+                    web_sys::console::error_1(&e);
+                }
+            });
+        }
+    });
 
     html! {
 
@@ -118,6 +127,25 @@ pub fn htmlmenele() -> Html {
                  }</button>
                 </div>
             <br/>
+            <hr/>
+            <br/>
+            <div style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            ">
+                <button onclick = {on_select_all}>
+                {
+                    "Alles auswählen"
+                }
+                </button>
+                <br/>
+                <button onclick = {on_copy}>
+                {
+                    "Alles kopieren"
+                }
+                </button>
+            </div> 
             <hr/>
             <br/>
             <HtmlLayout/>
