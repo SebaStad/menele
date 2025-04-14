@@ -58,6 +58,12 @@ cargo install --locked cargo-xwin
 cargo tauri build --runner cargo-xwin --target x86_64-pc-windows-msvc
 ```
 
+### Error with public folder
+Weird error with ```public``` folder? Thats because the folder is missing and is required for a build
+```
+mkdir public
+```
+
 ### Quick css check?
 
 ```
